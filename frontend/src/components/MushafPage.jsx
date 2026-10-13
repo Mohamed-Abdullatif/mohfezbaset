@@ -19,62 +19,14 @@ const LEGEND = [
 
 
 // Surah header: tan frame · scrollwork wings · green medallions (ayah count / order) · pointed name cartouche
-const Wing = () => (
-  <svg viewBox="0 0 170 112" aria-hidden="true">
-    <g fill="none" stroke="#5A5A5A" strokeWidth="1.6" strokeLinecap="round">
-      <path d="M8 56 C8 18 62 6 84 30 C100 48 84 70 64 60 C50 53 55 38 68 41" />
-      <path d="M8 56 C8 94 62 106 84 82 C100 64 84 42 64 52 C50 59 55 74 68 71" />
-      <path d="M8 56 H46" />
-    </g>
-    <g fill="#E07B55" stroke="#8A3F25" strokeWidth="1">
-      <path d="M26 30 C46 8 82 12 94 36 C72 44 46 44 26 30Z" />
-      <path d="M26 82 C46 104 82 100 94 76 C72 68 46 68 26 82Z" />
-    </g>
-    <g fill="#E4E4E4" stroke="#6E6E6E" strokeWidth="1.2">
-      <path d="M92 56 C108 38 138 38 160 56 C138 74 108 74 92 56Z" />
-      <path d="M104 56 C116 47 134 47 146 56 C134 65 116 65 104 56Z" fill="#fff" />
-    </g>
-    <circle cx="128" cy="56" r="4.2" fill="#E07B55" stroke="#8A3F25" strokeWidth=".8" />
-    <g fill="#C9B26A"><circle cx="18" cy="26" r="3" /><circle cx="18" cy="86" r="3" /></g>
-  </svg>
-);
-
-const Medallion = ({ label, value }) => (
-  <span className="bn-circ">
-    <svg viewBox="0 0 100 100" aria-hidden="true">
-      <defs>
-        <linearGradient id="bnRing" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor="#B4DBB8" /><stop offset="1" stopColor="#4E9B63" /></linearGradient>
-        <radialGradient id="bnCore" cx=".5" cy=".4" r=".7"><stop offset="0" stopColor="#FFFFFF" /><stop offset="1" stopColor="#DDEFD6" /></radialGradient>
-      </defs>
-      <circle cx="50" cy="50" r="47" fill="url(#bnRing)" stroke="#2F6B45" strokeWidth="2.5" />
-      <circle cx="50" cy="50" r="36" fill="url(#bnCore)" stroke="#fff" strokeWidth="2" />
-      <circle cx="50" cy="50" r="36" fill="none" stroke="#3F8A59" strokeWidth="1" />
-    </svg>
-    <span className="bn-circ-t"><small>{label}</small><b>{value}</b></span>
-  </span>
-);
-
 function SurahBanner({ surah }) {
   return (
-    <div className="mb-bar">
-      <span className="bn-wing"><Wing /></span>
-      <Medallion label="ترتيبها" value={toArabicNum(surah.number)} />
-      <span className="bn-cart">
-        <svg viewBox="0 0 400 100" preserveAspectRatio="none" aria-hidden="true">
-          <defs>
-            <radialGradient id="bnCart" cx=".5" cy=".45" r=".75"><stop offset="0" stopColor="#FFFFFF" /><stop offset="1" stopColor="#D4EBCF" /></radialGradient>
-          </defs>
-          <path d="M3 50 C23 50 31 4 68 4 H332 C369 4 377 50 397 50 C377 50 369 96 332 96 H68 C31 96 23 50 3 50Z"
-            fill="url(#bnCart)" stroke="#2F6B45" strokeWidth="7" vectorEffect="non-scaling-stroke" />
-          <path d="M3 50 C23 50 31 4 68 4 H332 C369 4 377 50 397 50 C377 50 369 96 332 96 H68 C31 96 23 50 3 50Z"
-            fill="none" stroke="#6DB27F" strokeWidth="3.4" vectorEffect="non-scaling-stroke" />
-          <path d="M20 50 C36 50 43 17 72 17 H328 C357 17 364 50 380 50 C364 50 357 83 328 83 H72 C43 83 36 50 20 50Z"
-            fill="none" stroke="#B8913D" strokeWidth="1.4" vectorEffect="non-scaling-stroke" />
-        </svg>
-        <span className="bn-name">{surah.name}</span>
-      </span>
-      <Medallion label="آياتها" value={toArabicNum(surah.numberOfAyahs)} />
-      <span className="bn-wing flip"><Wing /></span>
+    <div className="sb">
+      <span className="sb-side"><small>ترتيبها</small><b>{toArabicNum(surah.number)}</b></span>
+      <span className="sb-rule" aria-hidden="true" />
+      <span className="sb-name">{surah.name}</span>
+      <span className="sb-rule" aria-hidden="true" />
+      <span className="sb-side"><small>آياتها</small><b>{toArabicNum(surah.numberOfAyahs)}</b></span>
     </div>
   );
 }

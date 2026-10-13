@@ -1588,25 +1588,6 @@ html[dir="ltr"] .mr-select, html[dir="ltr"] .mr-reciter, html[dir="ltr"] .recite
 .mb-para { margin: 0; text-align: justify; text-align-last: center; text-justify: inter-word; word-spacing: .02em; }
 .mb-opening .mb-para { text-align-last: justify; }
 
-.mb-banner {
-  --bh: min(var(--row), 6.9cqw);
-  position: relative; height: var(--bh);
-  margin: calc((var(--row) - var(--bh)) / 2) 0;   /* exactly one text row */
-  -webkit-text-stroke: 0;
-}
-.mb-banner-svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
-.mb-bn-name {
-  position: absolute; left: 50%; top: 50%; transform: translate(-50%, -54%);
-  font-size: calc(var(--bh) * .58); line-height: 1; white-space: nowrap; font-weight: 700;
-  color: var(--mush-teal);
-}
-.mb-bn-c {
-  position: absolute; top: 50%; transform: translate(-50%, -50%);
-  width: 6%; text-align: center; line-height: 1;
-  font-family: 'Amiri', serif; font-weight: 700; font-size: calc(var(--bh) * .33); color: var(--mush-teal);
-}
-.mb-bn-l { left: 11.7%; }
-.mb-bn-r { left: 88.3%; }
 .mb-bismillah { height: var(--row); text-align: center; line-height: var(--row); font-size: .95em; }
 
 /* Ayahs */
@@ -1715,7 +1696,6 @@ html, body { overflow-x: hidden; }
   color: #2F6B3C; background: radial-gradient(circle, #EEF8E4 55%, #D3EAC3 100%);
   border: 1.6px solid #C9A24B; box-shadow: 0 0 0 1.5px #fff, 0 0 0 2.6px rgba(201, 162, 75, .7);
 }
-.mb-page.v-easy .mb-bn-name, .mb-page.v-easy .mb-bn-c { color: #1F5D3A; }
 .mb-page.v-easy .mb-bismillah { color: var(--ink); }
 .mb-page.v-easy .mb-quarter, .mb-page.v-easy .mb-sajda { color: #2F6B3C; }
 .mb-page.v-easy .mb-ayah.selected { background: rgba(201, 162, 75, .35); }
@@ -1744,8 +1724,6 @@ html, body { overflow-x: hidden; }
 .mb-failed { color: var(--text2); font-size: .9rem; }
 
 /* Banner / basmalah use a regular Arabic font (the page font only has Mushaf glyphs) */
-.mb-banner, .mb-banner *, .mb-bismillah { font-family: 'Amiri Quran', 'Amiri', serif; }
-.mb-banner { --bh: min(calc(var(--row) * 1.18), 7.6cqw); }
 
 .mb-w.end { color: #B58A25; }
 .mb-page.v-easy .mb-w.end { color: #B58A25; }
@@ -1811,32 +1789,12 @@ html[dir="ltr"] .mr-select, html[dir="ltr"] .mr-reciter, html[dir="ltr"] .recite
 @media (max-width: 600px) { .study-chip, .study-select { height: 38px; font-size: .8rem; padding-inline: 14px; } .study-select { max-width: 100%; } }
 
 /* Surah-name box: taller, bolder, readable */
-.mb-banner { --bh: min(calc(var(--row) * 1.45), 10.2cqw); }
-.mb-bn-name { font-size: calc(var(--bh) * .46); transform: translate(-50%, -52%); }
-.mb-bn-c { width: 8%; font-size: calc(var(--bh) * .3); }
-.mb-bn-l { left: 14.4%; }
-.mb-bn-r { left: 85.6%; }
 
 
 .ph-4 { --ph: #CDE6FA; }
 .mb-page.no-phrases .ph-4 { --ph: transparent; }
 
 
-/* ================================================
-   SURAH BAR — simple
-   ================================================ */
-.mb-bar {
-  --bh: min(calc(var(--row) * 1.25), 7.6cqw);
-  height: var(--bh);
-  margin: calc((var(--row) - var(--bh)) / 2) 0;
-  display: flex; align-items: center; gap: .8em; padding: 0 1em;
-  background: #EDF5E6; border: 1.5px solid #B8913D; border-radius: 6px;
-  font-family: 'Amiri Quran', 'Amiri', serif; -webkit-text-stroke: 0;
-}
-.mb-bar-name { font-size: calc(var(--bh) * .66); line-height: 1; font-weight: 700; color: #1F5D3A; white-space: nowrap; padding-bottom: .08em; }
-.mb-bar-rule { flex: 1; height: 1px; background: #B8913D; opacity: .8; }
-.mb-page.v-classic .mb-bar { background: #EEF0FB; border-color: #C9A24B; }
-.mb-page.v-classic .mb-bar-name { color: #2B2778; }
 
 
 /* ================================================
@@ -1850,56 +1808,8 @@ html[dir="ltr"] .mr-select, html[dir="ltr"] .mr-reciter, html[dir="ltr"] .recite
 /* page tint: white at the top, easing into pale blue */
 .mb-page.v-easy { background: linear-gradient(180deg, #F8FCFE 0%, #EAF6FB 45%, #E1F0F8 100%); }
 
-.mb-bar {
-  --bh: min(calc(var(--row) * 1.5), 9cqw);
-  height: var(--bh);
-  margin: calc((var(--row) - var(--bh)) / 2) 0;
-  display: flex; align-items: center; justify-content: space-between; gap: .6em; padding: 0 .5em;
-  background: linear-gradient(180deg, #F2F9EC, #DDEFD2); border: 1.5px solid #B8913D; border-radius: 6px;
-  box-shadow: inset 0 0 0 2px #FBF6E6, inset 0 0 0 3px rgba(62, 142, 90, .5);
-  font-family: 'Amiri Quran', 'Amiri', serif; -webkit-text-stroke: 0;
-}
-.mb-bar-name { flex: 1; text-align: center; font-size: calc(var(--bh) * .56); line-height: 1; font-weight: 700; color: #1F5D3A; white-space: nowrap; }
-.mb-bar-badge {
-  flex: none; width: calc(var(--bh) * .74); height: calc(var(--bh) * .74); border-radius: 50%;
-  display: flex; flex-direction: column; align-items: center; justify-content: center; line-height: 1;
-  background: #fff; border: 1.6px solid #3E8E5A; box-shadow: 0 0 0 1.5px #FBF6E6, 0 0 0 2.6px rgba(184, 145, 61, .8);
-  color: #1F5D3A;
-}
-.mb-bar-badge small { font-size: calc(var(--bh) * .17); font-weight: 700; }
-.mb-bar-badge b { font-family: 'Amiri', serif; font-size: calc(var(--bh) * .26); margin-top: .12em; }
-.mb-bar-rule { display: none; }
-.mb-page.v-classic .mb-bar { background: linear-gradient(180deg, #F4F5FD, #E6E9F8); border-color: #C9A24B; box-shadow: inset 0 0 0 2px #FBF6E6, inset 0 0 0 3px rgba(43, 39, 120, .45); }
-.mb-page.v-classic .mb-bar-name, .mb-page.v-classic .mb-bar-badge { color: #2B2778; }
-.mb-page.v-classic .mb-bar-badge { border-color: #2B2778; }
 
 
-/* ================================================
-   SURAH BANNER — tan frame, scrollwork wings, green medallions, pointed cartouche
-   ================================================ */
-.mb-bar {
-  height: calc(var(--row) * 1.4); margin: 0; padding: 0 .35em;
-  display: flex; align-items: center; justify-content: stretch; gap: .25em;
-  background: linear-gradient(180deg, #FFFDF4, #F1ECD8);
-  border: 5px solid #D8BE6F; border-radius: 2px;
-  box-shadow: 0 0 0 1.5px #8C7434, inset 0 0 0 1.5px #8C7434;
-  font-family: 'Amiri Quran', 'Amiri', serif; -webkit-text-stroke: 0; box-sizing: border-box;
-}
-.bn-wing { flex: 1 1 0; min-width: 0; height: 100%; display: flex; align-items: center; justify-content: center; overflow: hidden; }
-.bn-wing svg { height: 90%; width: auto; max-width: 100%; display: block; }
-.bn-wing.flip svg { transform: scaleX(-1); }
-.bn-circ { position: relative; flex: none; height: 92%; aspect-ratio: 1; }
-.bn-circ svg { width: 100%; height: 100%; display: block; }
-.bn-circ-t { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; line-height: 1; color: #14391F; }
-.bn-circ-t small { font-size: calc(var(--row) * .27); font-weight: 700; }
-.bn-circ-t b { font-family: 'Amiri', serif; font-size: calc(var(--row) * .42); margin-top: .08em; }
-.bn-cart { position: relative; flex: 2.5 1 0; min-width: 0; height: 94%; }
-.bn-cart svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
-.bn-name {
-  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
-  font-size: calc(var(--row) * .72); line-height: 1; font-weight: 700; color: #111; white-space: nowrap; padding-bottom: .1em;
-}
-.mb-page.v-classic .mb-bar { background: linear-gradient(180deg, #FFFDF4, #F1ECD8); border-color: #D8BE6F; box-shadow: 0 0 0 1.5px #8C7434, inset 0 0 0 1.5px #8C7434; }
 
 
 /* ================================================
