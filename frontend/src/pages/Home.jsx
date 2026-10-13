@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useApp } from '../context/AppContext';
+import './home.css';
 
 const FEATURES = [
   { icon: '🎧', titleKey: 'feat1Title', descKey: 'feat1Desc' },
@@ -10,13 +11,32 @@ const FEATURES = [
   { icon: '📥', titleKey: 'feat4Title', descKey: 'feat4Desc' },
 ];
 
+const STEPS = [
+  {
+    ar: ['اختر سورة', 'تصفّح السور الـ ١١٤ وابدأ من حيث تحب.'],
+    en: ['Pick a surah', 'Browse all 114 surahs and start wherever you like.'],
+  },
+  {
+    ar: ['استمع وكرّر', 'استمع لقارئك المفضّل وكرّر الآيات حتى تثبت.'],
+    en: ['Listen & repeat', 'Follow your favorite reciter and repeat until it sticks.'],
+  },
+  {
+    ar: ['تابع تقدّمك', 'سجّل ما حفظته وراقب إنجازك يومًا بعد يوم.'],
+    en: ['Track progress', 'Log what you memorized and watch your progress grow.'],
+  },
+];
+
+const toArabicDigits = v => String(v).replace(/\d/g, d => '٠١٢٣٤٥٦٧٨٩'[d]);
+
 export default function Home() {
   const { t, lang, user, progress, prefs } = useApp();
+  const isAr = lang === 'ar';
   const savedPage = parseInt(localStorage.getItem('mushaf_last_page'), 10) || (user && prefs && prefs.last_page > 1 ? prefs.last_page : 0);
   const navigate = useNavigate();
 
-  const totalMemorized = progress.reduce((s, p) => s + p.memorized_ayahs, 0);
   const completedSurahs = progress.filter(p => p.memorized_ayahs >= p.total_ayahs).length;
+  const totalMemorized = progress.reduce((s, p) => s + p.memorized_ayahs, 0);
+  const fmt = v => (isAr ? toArabicDigits(v) : Number(v).toLocaleString());
 
   const [visitors, setVisitors] = useState(null);
   useEffect(() => {
@@ -25,92 +45,122 @@ export default function Home() {
       .catch(() => axios.get('/api/stats').then(r => setVisitors(r.data.visitors)).catch(() => {}));
   }, []);
 
+  const stats = [
+    { val: fmt(114), label: t.surah },
+    { val: fmt(38), label: t.reciters },
+    { val: user ? fmt(completedSurahs) : '—', label: isAr ? 'سور محفوظة' : 'Memorized' },
+    { val: visitors !== null ? fmt(visitors) : '…', label: isAr ? 'زائر' : 'Visitors' },
+  ];
+
   return (
-    <div>
+    <div className="hm">
       {/* ── Hero ── */}
-      <div className="hero">
-        <div className="hero-inner">
-          <img className="hero-logo" src={`${import.meta.env.BASE_URL}logo-mark.webp`} alt="" width="150" height="141" />
-          <div className="hero-badge">
-            {lang === 'ar' ? 'منصة حفظ القرآن الكريم' : 'Quran Memorization Platform'}
+      <section className="hm-hero">
+        <div className="hm-hero-glow" aria-hidden="true" />
+        <div className="hm-hero-inner">
+          <div className="hm-hero-text">
+            <span className="hm-badge">
+              <span className="hm-badge-dot" />
+              {isAr ? 'منصة حفظ القرآن الكريم' : 'Quran Memorization Platform'}
+            </span>
+            <h1 className="hm-title">{t.appName}</h1>
+            <p className="hm-subtitle">{t.welcomeDesc}</p>
+
+            <div className="hm-actions">
+              {savedPage > 1 && (
+                <button className="hm-btn hm-btn-gold" onClick={() => navigate('/mushaf')}>
+                  {isAr ? `تابع القراءة · صفحة ${toArabicDigits(savedPage)}` : `Continue · page ${savedPage}`}
+                </button>
+              )}
+              <button className={`hm-btn ${savedPage > 1 ? 'hm-btn-ghost' : 'hm-btn-gold'}`} onClick={() => navigate('/quran')}>
+                {t.getStarted} <span className="hm-arrow">←</span>
+              </button>
+              {!user && (
+                <button className="hm-btn hm-btn-ghost" onClick={() => navigate('/register')}>
+                  {t.register}
+                </button>
+              )}
+            </div>
           </div>
 
-          <h1 className="hero-title">{t.appName}</h1>
-          <p className="hero-subtitle">{t.welcomeDesc}</p>
-
-          <div className="hero-actions">
-            {savedPage > 1 && (
-              <button className="hero-btn-white" onClick={() => navigate('/mushaf')}>
-                {lang === 'ar' ? `تابع القراءة · صفحة ${String(savedPage).replace(/\d/g, d => '٠١٢٣٤٥٦٧٨٩'[d])}` : `Continue · page ${savedPage}`}
-              </button>
-            )}
-            <button className={savedPage > 1 ? 'hero-btn-outline' : 'hero-btn-white'} onClick={() => navigate('/quran')}>
-              {t.getStarted} ←
-            </button>
-            {!user && (
-              <button className="hero-btn-outline" onClick={() => navigate('/register')}>
-                {t.register}
-              </button>
-            )}
-          </div>
-
-          <div className="hero-stats">
-            <div className="hero-stat">
-              <div className="hero-stat-val">١١٤</div>
-              <div className="hero-stat-label">{t.surah}</div>
-            </div>
-            <div className="hero-stat">
-              <div className="hero-stat-val">٣٨</div>
-              <div className="hero-stat-label">{t.reciters}</div>
-            </div>
-            <div className="hero-stat">
-              <div className="hero-stat-val">{user ? completedSurahs : '—'}</div>
-              <div className="hero-stat-label">{lang === 'ar' ? 'سور محفوظة' : 'Memorized'}</div>
-            </div>
-            <div className="hero-stat">
-              <div className="hero-stat-val">
-                {visitors !== null
-                  ? (lang === 'ar'
-                      ? String(visitors).replace(/\d/g, d => '٠١٢٣٤٥٦٧٨٩'[d])
-                      : visitors.toLocaleString())
-                  : '…'}
+          <div className="hm-hero-art" aria-hidden="true">
+            <div className="hm-verse-card">
+              <img className="hm-verse-logo" src={`${import.meta.env.BASE_URL}logo-mark.webp`} alt="" width="56" height="53" />
+              <div className="hm-verse-ayah">بِسۡمِ ٱللَّهِ ٱلرَّحۡمَٰنِ ٱلرَّحِيمِ</div>
+              <div className="hm-verse-meta">{isAr ? 'سورة الفاتحة · ١' : 'Al-Fatihah · 1:1'}</div>
+              <div className="hm-verse-bar"><span style={{ width: user ? `${Math.min(100, (totalMemorized / 6236) * 100)}%` : '38%' }} /></div>
+              <div className="hm-verse-foot">
+                <span>{isAr ? 'تقدّمك' : 'Your progress'}</span>
+                <b>{user ? `${fmt(totalMemorized)} / ${fmt(6236)}` : (isAr ? 'ابدأ اليوم' : 'Start today')}</b>
               </div>
-              <div className="hero-stat-label">{lang === 'ar' ? 'زائر' : 'Visitors'}</div>
             </div>
+            <div className="hm-orb hm-orb-1" />
+            <div className="hm-orb hm-orb-2" />
           </div>
         </div>
-      </div>
+      </section>
+
+      {/* ── Stats ── */}
+      <section className="hm-stats">
+        {stats.map(s => (
+          <div key={s.label} className="hm-stat">
+            <div className="hm-stat-val">{s.val}</div>
+            <div className="hm-stat-label">{s.label}</div>
+          </div>
+        ))}
+      </section>
 
       {/* ── Features ── */}
-      <div className="features-section">
-        <div className="section-header">
-          <div className="section-badge">{t.features}</div>
-          <h2 className="section-title">{lang === 'ar' ? 'كل ما تحتاجه للحفظ' : 'Everything You Need'}</h2>
-          <p className="section-sub">{t.tagline}</p>
+      <section className="hm-section">
+        <div className="hm-head">
+          <span className="hm-eyebrow">{t.features}</span>
+          <h2 className="hm-h2">{isAr ? 'كل ما تحتاجه للحفظ' : 'Everything You Need'}</h2>
+          <p className="hm-lead">{t.tagline}</p>
         </div>
-        <div className="grid-4">
+        <div className="hm-features">
           {FEATURES.map(f => (
-            <div key={f.titleKey} className="feature-card">
-              <div className="feature-icon-wrap">{f.icon}</div>
-              <div className="feature-title">{t[f.titleKey]}</div>
-              <div className="feature-desc">{t[f.descKey]}</div>
+            <div key={f.titleKey} className="hm-card">
+              <div className="hm-card-icon">{f.icon}</div>
+              <h3 className="hm-card-title">{t[f.titleKey]}</h3>
+              <p className="hm-card-desc">{t[f.descKey]}</p>
             </div>
           ))}
         </div>
-      </div>
+      </section>
+
+      {/* ── How it works ── */}
+      <section className="hm-section hm-steps-section">
+        <div className="hm-head">
+          <span className="hm-eyebrow">{isAr ? 'كيف يعمل' : 'How it works'}</span>
+          <h2 className="hm-h2">{isAr ? 'ثلاث خطوات للحفظ' : 'Three steps to memorize'}</h2>
+        </div>
+        <div className="hm-steps">
+          {STEPS.map((s, i) => {
+            const [title, desc] = isAr ? s.ar : s.en;
+            return (
+              <div key={i} className="hm-step">
+                <div className="hm-step-num">{fmt(i + 1)}</div>
+                <h3 className="hm-card-title">{title}</h3>
+                <p className="hm-card-desc">{desc}</p>
+              </div>
+            );
+          })}
+        </div>
+      </section>
 
       {/* ── CTA ── */}
-      <div style={{ padding: '0 24px 80px', maxWidth: 1200, margin: '0 auto' }}>
-        <div className="cta-block">
-          <div className="cta-ayah">ٱقۡرَأۡ بِٱسۡمِ رَبِّكَ ٱلَّذِي خَلَقَ</div>
-          <p className="cta-ref">
-            {lang === 'ar' ? 'اقرأ باسم ربك الذي خلق — سورة العلق' : 'Read in the name of your Lord who created — Al-Alaq 96:1'}
+      <section className="hm-cta-wrap">
+        <div className="hm-cta">
+          <div className="hm-cta-ornament" aria-hidden="true">۞</div>
+          <div className="hm-cta-ayah">ٱقۡرَأۡ بِٱسۡمِ رَبِّكَ ٱلَّذِي خَلَقَ</div>
+          <p className="hm-cta-ref">
+            {isAr ? 'اقرأ باسم ربك الذي خلق — سورة العلق' : 'Read in the name of your Lord who created — Al-Alaq 96:1'}
           </p>
-          <button className="btn btn-primary" onClick={() => navigate('/quran')}>
-            {t.startMemorizing} ←
+          <button className="hm-btn hm-btn-gold" onClick={() => navigate('/quran')}>
+            {t.startMemorizing} <span className="hm-arrow">←</span>
           </button>
         </div>
-      </div>
+      </section>
     </div>
   );
 }
