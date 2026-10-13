@@ -1,13 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useApp } from '../context/AppContext';
+import './quran-list.css';
+
+const toArabicDigits = v => String(v).replace(/\d/g, d => '٠١٢٣٤٥٦٧٨٩'[d]);
 
 export default function QuranList() {
   const { t, lang, getSurahProgress } = useApp();
+  const isAr = lang === 'ar';
+  const fmt = v => (isAr ? toArabicDigits(v) : v);
   const [surahs, setSurahs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
+  const [filter, setFilter] = useState('all');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -17,62 +23,97 @@ export default function QuranList() {
       .finally(() => setLoading(false));
   }, []);
 
-  const filtered = surahs.filter(s =>
-    s.name.includes(search) ||
-    s.englishName.toLowerCase().includes(search.toLowerCase()) ||
-    String(s.number).includes(search)
-  );
+  const filters = [
+    { key: 'all', label: isAr ? 'الكل' : 'All' },
+    { key: 'Meccan', label: t.makkiyya },
+    { key: 'Medinan', label: t.madaniyya },
+    { key: 'progress', label: isAr ? 'قيد الحفظ' : 'In progress' },
+  ];
+
+  const filtered = useMemo(() => {
+    const q = search.trim().toLowerCase();
+    return surahs.filter(s => {
+      if (q && !(s.name.includes(search.trim()) || s.englishName.toLowerCase().includes(q) || String(s.number).includes(q))) return false;
+      if (filter === 'Meccan' || filter === 'Medinan') return s.revelationType === filter;
+      if (filter === 'progress') return !!getSurahProgress(s.number);
+      return true;
+    });
+  }, [surahs, search, filter, getSurahProgress]);
 
   if (loading) return <div className="loader"><div className="spinner" />{t.loading}</div>;
 
   return (
-    <div className="page">
-      <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom: 6, flexWrap:'wrap', gap:10 }}>
-        <h1 className="page-title" style={{ margin:0 }}>{t.quran}</h1>
-        <button className="btn btn-primary" onClick={() => navigate('/mushaf')}>
-          📖 {lang === 'ar' ? 'اقرأ المصحف كاملاً' : 'Read Full Mushaf'}
-        </button>
-      </div>
-      <div className="search-bar">
-        <span>🔍</span>
-        <input
-          placeholder={t.search}
-          value={search}
-          onChange={e => setSearch(e.target.value)}
-        />
-        {search && <button onClick={() => setSearch('')} style={{ color: 'var(--text3)' }}>✕</button>}
-      </div>
+    <div className="ql">
+      {/* ── Header banner ── */}
+      <header className="ql-banner">
+        <div className="ql-banner-inner">
+          <div>
+            <h1 className="ql-title">{t.quran}</h1>
+            <p className="ql-sub">
+              {isAr ? `${fmt(surahs.length || 114)} سورة · ${fmt(6236)} آية` : `${surahs.length || 114} surahs · 6,236 ayahs`}
+            </p>
+          </div>
+          <button className="ql-read-btn" onClick={() => navigate('/mushaf')}>
+            <span aria-hidden="true">📖</span>
+            {isAr ? 'اقرأ المصحف كاملاً' : 'Read Full Mushaf'}
+          </button>
+        </div>
+      </header>
 
-      <div className="surah-grid">
-        {filtered.map(surah => {
-          const prog = getSurahProgress(surah.number);
-          const pct = prog ? Math.round((prog.memorized_ayahs / prog.total_ayahs) * 100) : 0;
-          return (
-            <div key={surah.number} className="surah-card" onClick={() => navigate(`/surah/${surah.number}`)}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                <div className="surah-num">{surah.number}</div>
-                <div>
-                  <div className="surah-name">{surah.name}</div>
-                  <div className="surah-name-en">{surah.englishName}</div>
-                </div>
-              </div>
-              <div className="surah-meta">
-                <span className="surah-tag">{surah.revelationType === 'Meccan' ? t.makkiyya : t.madaniyya}</span>
-                <span>{surah.numberOfAyahs} {t.ayahs}</span>
-              </div>
-              {prog && (
-                <div>
-                  <div className="progress-bar-mini">
-                    <div className="progress-bar-mini-fill" style={{ width: `${pct}%` }} />
+      <div className="ql-body">
+        {/* ── Search + filters ── */}
+        <div className="ql-tools">
+          <label className="ql-search">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
+              <circle cx="11" cy="11" r="7" /><line x1="21" y1="21" x2="16.65" y2="16.65" />
+            </svg>
+            <input placeholder={t.search} value={search} onChange={e => setSearch(e.target.value)} />
+            {search && <button type="button" className="ql-clear" onClick={() => setSearch('')} aria-label="Clear">✕</button>}
+          </label>
+          <div className="ql-chips" role="tablist">
+            {filters.map(f => (
+              <button key={f.key} role="tab" aria-selected={filter === f.key}
+                className={`ql-chip${filter === f.key ? ' active' : ''}`} onClick={() => setFilter(f.key)}>
+                {f.label}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* ── Grid ── */}
+        {filtered.length === 0 ? (
+          <div className="ql-empty">
+            <div className="ql-empty-icon">🔍</div>
+            <p>{isAr ? 'لا توجد نتائج مطابقة' : 'No matching surahs'}</p>
+          </div>
+        ) : (
+          <div className="ql-grid">
+            {filtered.map(surah => {
+              const prog = getSurahProgress(surah.number);
+              const pct = prog ? Math.round((prog.memorized_ayahs / prog.total_ayahs) * 100) : 0;
+              const meccan = surah.revelationType === 'Meccan';
+              return (
+                <button key={surah.number} className="ql-card" onClick={() => navigate(`/surah/${surah.number}`)}>
+                  <div className="ql-num"><span>{fmt(surah.number)}</span></div>
+                  <div className="ql-info">
+                    <div className="ql-name">{surah.name}</div>
+                    <div className="ql-name-en">{surah.englishName}</div>
+                    <div className="ql-meta">
+                      <span className={`ql-tag ${meccan ? 'meccan' : 'medinan'}`}>{meccan ? t.makkiyya : t.madaniyya}</span>
+                      <span className="ql-count">{fmt(surah.numberOfAyahs)} {t.ayahs}</span>
+                    </div>
+                    {prog && (
+                      <div className="ql-prog">
+                        <div className="ql-prog-bar"><div style={{ width: `${pct}%` }} /></div>
+                        <span>{fmt(pct)}%</span>
+                      </div>
+                    )}
                   </div>
-                  <div style={{ fontSize: '0.7rem', color: 'var(--text3)', marginTop: 2 }}>
-                    {pct}% {t.memorized}
-                  </div>
-                </div>
-              )}
-            </div>
-          );
-        })}
+                </button>
+              );
+            })}
+          </div>
+        )}
       </div>
     </div>
   );
