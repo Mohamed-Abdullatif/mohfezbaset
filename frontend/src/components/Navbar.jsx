@@ -1,12 +1,36 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate, useLocation } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
+import './navbar.css';
 
 export default function Navbar() {
   const { t, lang, setLang, theme, setTheme, user, logout } = useApp();
   const navigate = useNavigate();
   const [dropOpen, setDropOpen] = useState(false);
   const dropRef = useRef(null);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const { pathname } = useLocation();
+
+  useEffect(() => { setMenuOpen(false); }, [pathname]);
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  const links = [
+    { to: '/', label: t.home, end: true },
+    { to: '/quran', label: t.quran },
+    { to: '/mushaf', label: lang === 'ar' ? 'المصحف' : 'Mushaf' },
+    ...(user ? [
+      { to: '/bookmarks', label: t.bookmarks },
+      { to: '/progress', label: t.progress },
+      { to: '/downloads', label: t.downloads },
+    ] : []),
+  ];
+  const linkClass = ({ isActive }) => `nav-link${isActive ? ' active' : ''}`;
 
   const initials = user
     ? user.name.split(' ').map(w => w[0]).slice(0, 2).join('').toUpperCase()
@@ -21,20 +45,14 @@ export default function Navbar() {
   }, []);
 
   return (
-    <nav className="navbar">
+    <nav className={`navbar${scrolled ? ' scrolled' : ''}${menuOpen ? ' menu-open' : ''}`}>
       <NavLink to="/" className="navbar-brand">
         <img className="brand-mark" src={`${import.meta.env.BASE_URL}logo-mark.webp`} alt="" width="40" height="38" />
         <span>{t.appName}</span>
       </NavLink>
 
       <div className="navbar-nav">
-        <NavLink to="/" className={({ isActive }) => `nav-link${isActive ? ' active' : ''}`} end>{t.home}</NavLink>
-        <NavLink to="/quran" className={({ isActive }) => `nav-link${isActive ? ' active' : ''}`}>{t.quran}</NavLink>
-        {user && <>
-          <NavLink to="/bookmarks" className={({ isActive }) => `nav-link${isActive ? ' active' : ''}`}>{t.bookmarks}</NavLink>
-          <NavLink to="/progress" className={({ isActive }) => `nav-link${isActive ? ' active' : ''}`}>{t.progress}</NavLink>
-          <NavLink to="/downloads" className={({ isActive }) => `nav-link${isActive ? ' active' : ''}`}>{t.downloads}</NavLink>
-        </>}
+        {links.map(l => <NavLink key={l.to} to={l.to} end={l.end} className={linkClass}>{l.label}</NavLink>)}
       </div>
 
       <div className="navbar-actions">
@@ -130,6 +148,20 @@ export default function Navbar() {
             <NavLink to="/register" className="btn btn-primary btn-sm">{t.register}</NavLink>
           </>
         )}
+
+        <button
+          className="nav-burger"
+          onClick={() => setMenuOpen(o => !o)}
+          aria-label="Menu"
+          aria-expanded={menuOpen}
+        >
+          <span /><span /><span />
+        </button>
+      </div>
+
+      <div className="nav-mobile" aria-hidden={!menuOpen}>
+        {links.map(l => <NavLink key={l.to} to={l.to} end={l.end} className={linkClass}>{l.label}</NavLink>)}
+        {!user && <NavLink to="/login" className={linkClass}>{t.login}</NavLink>}
       </div>
     </nav>
   );
