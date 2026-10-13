@@ -6,6 +6,7 @@ import { RECITERS } from '../utils/reciters';
 import AudioPlayer from '../components/AudioPlayer';
 import Toast from '../components/Toast';
 import MushafBook from '../components/MushafBook';
+import './reader.css';
 
 const toArabicNum = (n) => String(n).replace(/\d/g, d => '٠١٢٣٤٥٦٧٨٩'[d]);
 
@@ -113,20 +114,23 @@ export default function SurahReader() {
         </div>
 
         <div className="mushaf-topbar-center">
-          {currentJuz && (
-            <span className="mushaf-badge">الجزء {JUZ_AR[currentJuz]}</span>
-          )}
-          {rightPageNum && (
-            <span className="mushaf-badge mushaf-badge-pages">
-              {leftPageNum
-                ? `بين ${toArabicNum(rightPageNum)} ـ ${toArabicNum(leftPageNum)}`
-                : toArabicNum(rightPageNum)}
-            </span>
-          )}
+          <h1 className="rd-title">{surah.name}</h1>
+          <div className="rd-badges">
+            {currentJuz && <span className="mushaf-badge">الجزء {JUZ_AR[currentJuz]}</span>}
+            {rightPageNum && (
+              <span className="mushaf-badge mushaf-badge-pages">
+                {leftPageNum
+                  ? `بين ${toArabicNum(rightPageNum)} ـ ${toArabicNum(leftPageNum)}`
+                  : toArabicNum(rightPageNum)}
+              </span>
+            )}
+          </div>
         </div>
 
         <div className="mushaf-topbar-side mushaf-topbar-right">
-          <span className="mushaf-surah-title-tag">{surah.name}</span>
+          <span className="mushaf-surah-title-tag">
+            {lang === 'ar' ? `${toArabicNum(surah.numberOfAyahs)} آية` : `${surah.numberOfAyahs} ayahs`}
+          </span>
         </div>
       </div>
 
@@ -174,7 +178,7 @@ export default function SurahReader() {
           >‹</button>
         </div>
 
-        <div style={{ width: 1, background: 'rgba(255,255,255,.12)', alignSelf: 'stretch', margin: '0 4px' }} />
+        <span className="rd-sep" aria-hidden="true" />
 
         <select className="reciter-select" value={selectedReciter} onChange={e => setSelectedReciter(e.target.value)}>
           {RECITERS.map(r => (
@@ -191,8 +195,8 @@ export default function SurahReader() {
         >
           {isDownloaded(surah.number, selectedReciter) ? `✓ ${t.downloaded}` : `📥 ${t.download}`}
         </button>
-        <button className="btn btn-outline btn-sm" onClick={() => setShowProgress(true)}>
-          📈{prog && <span style={{ color: 'var(--accent-lt)', marginInlineStart: 4 }}>{pct}%</span>}
+        <button className="btn btn-outline btn-sm rd-progress-btn" onClick={() => setShowProgress(true)}>
+          📈 <span>{lang === 'ar' ? 'تقدّمي' : 'Progress'}</span>{prog && <b>{pct}%</b>}
         </button>
       </div>
 
