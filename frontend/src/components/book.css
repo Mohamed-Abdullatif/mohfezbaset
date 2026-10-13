@@ -83,6 +83,53 @@
 }
 [data-theme="dark"] .mb-mode-banner { color: #14142B; background: linear-gradient(135deg, var(--gold-lt), var(--gold)); box-shadow: none; }
 
+/* ── Classic (framed) pages: illuminated-manuscript polish ── */
+.mb-wrap .mb-page.v-classic:not(.op-page) {
+  background-color: #FBF6E6;
+  box-shadow: inset 0 0 0 1px rgba(201, 162, 75, .5);
+}
+.mb-wrap .mb-page-left.v-classic:not(.op-page)  { border-radius: 12px 0 0 12px; }
+.mb-wrap .mb-page-right.v-classic:not(.op-page) { border-radius: 0 12px 12px 0; }
+.mb-wrap .mb-page.v-classic .mb-ring {
+  border-radius: 6px;
+  box-shadow:
+    0 0 0 1.5px #E3C77A, 0 0 0 3.5px #2B2778, 0 0 0 5px #D9B866,
+    0 8px 18px rgba(20, 16, 70, .28);
+}
+/* gold + indigo hairlines where the paper meets the band, plus inner depth and spine shading */
+.mb-wrap .mb-page.v-classic .mb-inner {
+  box-shadow:
+    inset 0 0 0 1.5px #D9B866, inset 0 0 0 3px rgba(43, 39, 120, .85),
+    inset 0 8px 16px -10px rgba(20, 16, 70, .4);
+}
+.mb-wrap .mb-page-left.v-classic .mb-inner {
+  box-shadow:
+    inset 0 0 0 1.5px #D9B866, inset 0 0 0 3px rgba(43, 39, 120, .85),
+    inset 0 8px 16px -10px rgba(20, 16, 70, .4), inset -26px 0 26px -20px rgba(110, 80, 20, .32);
+}
+.mb-wrap .mb-page-right.v-classic .mb-inner {
+  box-shadow:
+    inset 0 0 0 1.5px #D9B866, inset 0 0 0 3px rgba(43, 39, 120, .85),
+    inset 0 8px 16px -10px rgba(20, 16, 70, .4), inset 26px 0 26px -20px rgba(110, 80, 20, .32);
+}
+.mb-wrap .mb-page.v-classic .mb-corner { filter: drop-shadow(0 2px 3px rgba(20, 16, 70, .45)); }
+
+/* page number: indigo medallion with gold ring, like the corner rosettes */
+.mb-wrap .mb-page.v-classic .mb-pageno {
+  min-width: 2.6em; padding: .15em .9em; font-size: .85rem; letter-spacing: .02em;
+  color: #F6E8C0; background: radial-gradient(circle at 50% 35%, #3B36A0, #2B2778);
+  border: 1.5px solid #D9B866;
+  box-shadow: 0 0 0 2px #2B2778, 0 0 0 3.5px #D9B866, 0 3px 8px rgba(20, 16, 70, .4);
+}
+
+/* spine crease between two framed pages */
+.mb-wrap .mb-spread:has(.v-classic:not(.op-page)) .mb-spine {
+  width: 8px;
+  background: linear-gradient(to right, #EADFC2, #C9B88C 50%, #EADFC2);
+  box-shadow: inset 0 0 6px rgba(90, 65, 15, .3);
+}
+[data-theme="dark"] .mb-wrap .mb-page.v-classic:not(.op-page) { background-color: #F3ECD4; }
+
 @media (max-width: 820px) {
   .mb-wrap .mb-spread { box-shadow: none; }
   .mb-wrap .mb-page.v-easy { border-radius: 12px; box-shadow: inset 0 0 0 1px rgba(201, 162, 75, .45), 0 18px 40px -22px rgba(0, 0, 0, .55); background-image: none; }
