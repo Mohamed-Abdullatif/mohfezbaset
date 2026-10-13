@@ -160,39 +160,149 @@
   .mb-wrap .mb-page.v-easy { border-radius: 12px; box-shadow: inset 0 0 0 1px rgba(201, 162, 75, .45), 0 18px 40px -22px rgba(0, 0, 0, .55); background-image: none; }
   .mb-wrap .mb-arrow { width: 38px; height: 38px; }
 }
-/* ── Opening pages (Al-Fatihah / Al-Baqarah): same book treatment as the other pages, warm paper tone ── */
+/* ── Opening pages (Al-Fatihah / Al-Baqarah): same elegant frame as the other framed pages ── */
+.mb-wrap {
+  --paper-tex: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .45 0 0 0 0 .36 0 0 0 0 .2 0 0 0 .5 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='.35'/%3E%3C/svg%3E");
+}
 .mb-wrap .mb-page.op-page {
+  background-color: #FCF8EA !important;
   border-radius: 4px;
-  box-shadow: inset 0 0 0 1px rgba(201, 162, 75, .55);
-  background-image: radial-gradient(ellipse at 50% 38%, rgba(255, 255, 255, .9), rgba(255, 255, 255, 0) 70%);
+  box-shadow: inset 0 0 0 1px rgba(201, 162, 75, .45);
+  background-image: var(--paper-tex), radial-gradient(ellipse at 50% 40%, #FFFEF8 0%, rgba(255, 254, 248, 0) 72%);
 }
 .mb-wrap .mb-page-left.op-page {
   border-radius: 12px 0 0 12px;
-  background-image:
-    linear-gradient(to left, rgba(110, 80, 20, .16), rgba(110, 80, 20, 0) 9%),
-    radial-gradient(ellipse at 50% 38%, rgba(255, 255, 255, .9), rgba(255, 255, 255, 0) 70%);
+  background-image: linear-gradient(to left, rgba(110, 80, 20, .2), rgba(110, 80, 20, 0) 10%), var(--paper-tex), radial-gradient(ellipse at 50% 40%, #FFFEF8 0%, rgba(255, 254, 248, 0) 72%);
 }
 .mb-wrap .mb-page-right.op-page {
   border-radius: 0 12px 12px 0;
-  background-image:
-    linear-gradient(to right, rgba(110, 80, 20, .16), rgba(110, 80, 20, 0) 9%),
-    radial-gradient(ellipse at 50% 38%, rgba(255, 255, 255, .9), rgba(255, 255, 255, 0) 70%);
-}
-.mb-wrap .mb-spread:has(.op-page) .mb-spine {
-  width: 8px;
-  background: linear-gradient(to right, #EADFC2, #C9B88C 50%, #EADFC2);
-  box-shadow: inset 0 0 6px rgba(90, 65, 15, .3);
-}
-.mb-wrap .op-pageno {
-  padding: 2px 12px; border-radius: 999px; top: 96.2%;
-  font-family: var(--font-ar); font-size: 3.4cqw; font-weight: 700; color: #8A6B22;
-  background: rgba(255, 255, 255, .85); border: 1px solid rgba(201, 162, 75, .55);
-}
-.mb-wrap .op-name { text-shadow: 0 1px 0 rgba(255, 255, 255, .7); }
-@media (max-width: 820px) {
-  .mb-wrap .mb-page.op-page { border-radius: 12px; background-image: radial-gradient(ellipse at 50% 38%, rgba(255, 255, 255, .9), rgba(255, 255, 255, 0) 70%); box-shadow: inset 0 0 0 1px rgba(201, 162, 75, .55), 0 18px 40px -22px rgba(0, 0, 0, .55); }
+  background-image: linear-gradient(to right, rgba(110, 80, 20, .2), rgba(110, 80, 20, 0) 10%), var(--paper-tex), radial-gradient(ellipse at 50% 40%, #FFFEF8 0%, rgba(255, 254, 248, 0) 72%);
 }
 
+/* frame: gold rule + indigo hairline, diamond corners */
+.op-rule {
+  position: absolute; inset: 3.4cqw 3.2cqw; pointer-events: none;
+  border: 1.6px solid #C9A24B; border-radius: 3px;
+  outline: 1px solid rgba(43, 39, 120, .75); outline-offset: -.9cqw;
+}
+.op-corner {
+  position: absolute; width: 6cqw; height: 6cqw; pointer-events: none; z-index: 2;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 48 48'%3E%3Cpath d='M24 3 45 24 24 45 3 24Z' fill='%23FCF8EA' stroke='%23C9A24B' stroke-width='3'/%3E%3Cpath d='M24 11 37 24 24 37 11 24Z' fill='none' stroke='%232B2778' stroke-width='2'/%3E%3Ccircle cx='24' cy='24' r='4.2' fill='%23C9A24B'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
+}
+.op-corner.tl { top: .4cqw; left: .2cqw; }
+.op-corner.tr { top: .4cqw; right: .2cqw; }
+.op-corner.bl { bottom: .4cqw; left: .2cqw; }
+.op-corner.br { bottom: .4cqw; right: .2cqw; }
+
+/* surah name cartouche */
+.mb-wrap .op-name {
+  left: 50%; top: 10.6%; padding: .28em 1.7em; z-index: 2;
+  font-size: 4.6cqw; color: #2B2778; text-shadow: none;
+  background: #FCF8EA; border: 1.5px solid #C9A24B; border-radius: 999px;
+  box-shadow: 0 0 0 .7cqw #FCF8EA, 0 0 0 calc(.7cqw + 1px) rgba(43, 39, 120, .75);
+}
+.mb-wrap .op-name::before, .mb-wrap .op-name::after {
+  content: ''; position: absolute; top: 50%; width: 9cqw; height: 1.5px; margin-top: -.75px;
+}
+.mb-wrap .op-name::before { right: calc(100% + 1.4cqw); background: linear-gradient(to left, #C9A24B, rgba(201, 162, 75, 0)); }
+.mb-wrap .op-name::after  { left: calc(100% + 1.4cqw);  background: linear-gradient(to right, #C9A24B, rgba(201, 162, 75, 0)); }
+
+/* page number on the bottom rule */
+.mb-wrap .op-pageno {
+  position: absolute; left: 50%; top: auto; bottom: 3.4cqw; transform: translate(-50%, 50%); z-index: 2;
+  display: flex; align-items: center; gap: .55em; padding: 0 .9em;
+  font-family: 'Amiri', serif; font-weight: 700; font-size: 3.6cqw; line-height: 1.2; color: #2B2778;
+  background: #FCF8EA; border: none; border-radius: 0;
+}
+.mb-wrap .op-pageno::before, .mb-wrap .op-pageno::after { content: '◆'; font-size: .5em; color: #C9A24B; }
+
+.mb-wrap .mb-spread:has(.op-page) { box-shadow: 0 1px 0 #E3DBC6, 0 2px 0 #D9D0B8, 0 3px 0 #CFC5AB, 0 4px 0 #C5BB9F, 0 5px 0 #BBB093, 0 6px 0 #B0A586, 0 36px 50px -22px rgba(27, 27, 51, .5), 0 10px 22px rgba(27, 27, 51, .14); }
+.mb-wrap .mb-spread:has(.op-page) .mb-spine {
+  width: 10px;
+  background: linear-gradient(to right, #E8DDBF, #BCAA7C 48%, #FFF9E4 52%, #E8DDBF);
+  box-shadow: inset 0 0 8px rgba(90, 65, 15, .35);
+}
+@media (max-width: 820px) {
+  .mb-wrap .mb-page.op-page { border-radius: 12px; background-image: var(--paper-tex), radial-gradient(ellipse at 50% 40%, #FFFEF8 0%, rgba(255, 254, 248, 0) 72%); box-shadow: inset 0 0 0 1px rgba(201, 162, 75, .45), 0 18px 40px -22px rgba(0, 0, 0, .55); }
+}
+
+/* ── Classic (framed) pages: elegant & light ──
+   Thin double rule (gold + indigo) instead of the heavy pattern band, gold diamond corners,
+   textured warm paper, a thicker page stack and a soft spine fold. */
+.mb-wrap .mb-page.v-classic:not(.op-page) {
+  --band: 3.2cqw;
+  background-color: #FCF8EA;
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .45 0 0 0 0 .36 0 0 0 0 .2 0 0 0 .5 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='.35'/%3E%3C/svg%3E"),
+    radial-gradient(ellipse at 50% 40%, #FFFEF8 0%, rgba(255, 254, 248, 0) 72%);
+  box-shadow: inset 0 0 0 1px rgba(201, 162, 75, .45);
+}
+.mb-wrap .mb-page-left.v-classic:not(.op-page) {
+  border-radius: 12px 0 0 12px;
+  background-image:
+    linear-gradient(to left, rgba(110, 80, 20, .2), rgba(110, 80, 20, 0) 10%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .45 0 0 0 0 .36 0 0 0 0 .2 0 0 0 .5 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='.35'/%3E%3C/svg%3E"),
+    radial-gradient(ellipse at 50% 40%, #FFFEF8 0%, rgba(255, 254, 248, 0) 72%);
+}
+.mb-wrap .mb-page-right.v-classic:not(.op-page) {
+  border-radius: 0 12px 12px 0;
+  background-image:
+    linear-gradient(to right, rgba(110, 80, 20, .2), rgba(110, 80, 20, 0) 10%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .45 0 0 0 0 .36 0 0 0 0 .2 0 0 0 .5 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='.35'/%3E%3C/svg%3E"),
+    radial-gradient(ellipse at 50% 40%, #FFFEF8 0%, rgba(255, 254, 248, 0) 72%);
+}
+
+/* no Tajweed colours -> no legend; drop it from the layout so the text grows into the space */
+.mb-wrap .mb-page.v-classic.no-tajweed .mb-legend { display: none; }
+
+/* the frame: outer gold rule, then an indigo hairline a few px inside */
+.mb-wrap .mb-page.v-classic:not(.op-page) .mb-ring {
+  inset: 3.4cqw 3.2cqw; padding: var(--band);
+  background: none; border-radius: 3px; border: 1.6px solid #C9A24B;
+  box-shadow: none;
+}
+.mb-wrap .mb-page.v-classic:not(.op-page) .mb-inner {
+  background: none; padding: 2.2cqw 2.2cqw;
+  box-shadow: none; outline: 1px solid rgba(43, 39, 120, .75); outline-offset: -.9cqw;
+}
+
+/* corners: small gold diamonds on the frame corners */
+.mb-wrap .mb-page.v-classic:not(.op-page) .mb-corner {
+  width: calc(var(--band) * 1.7); height: calc(var(--band) * 1.7); filter: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 48 48'%3E%3Cpath d='M24 3 45 24 24 45 3 24Z' fill='%23FCF8EA' stroke='%23C9A24B' stroke-width='3'/%3E%3Cpath d='M24 11 37 24 24 37 11 24Z' fill='none' stroke='%232B2778' stroke-width='2'/%3E%3Ccircle cx='24' cy='24' r='4.2' fill='%23C9A24B'/%3E%3C/svg%3E");
+}
+.mb-wrap .mb-page.v-classic:not(.op-page) .mb-corner.tl { top: calc(var(--band) * -.95); left: calc(var(--band) * -.95); }
+.mb-wrap .mb-page.v-classic:not(.op-page) .mb-corner.tr { top: calc(var(--band) * -.95); right: calc(var(--band) * -.95); }
+.mb-wrap .mb-page.v-classic:not(.op-page) .mb-corner.bl { bottom: calc(var(--band) * -.95); left: calc(var(--band) * -.95); }
+.mb-wrap .mb-page.v-classic:not(.op-page) .mb-corner.br { bottom: calc(var(--band) * -.95); right: calc(var(--band) * -.95); }
+
+/* page number: plain indigo numerals flanked by gold diamonds, sitting on the bottom rule */
+.mb-wrap .mb-page.v-classic:not(.op-page) .mb-pageno {
+  bottom: calc(var(--band) * -.95); min-width: 0; padding: 0 .9em; display: flex; align-items: center; gap: .55em;
+  font-family: 'Amiri', serif; font-size: .95rem; font-weight: 700; color: #2B2778; letter-spacing: 0;
+  background: #FCF8EA; border: none; box-shadow: none; border-radius: 0;
+}
+.mb-wrap .mb-page.v-classic:not(.op-page) .mb-pageno::before,
+.mb-wrap .mb-page.v-classic:not(.op-page) .mb-pageno::after { content: '◆'; font-size: .5em; color: #C9A24B; }
+
+/* thicker page stack and a fold at the spine for framed spreads */
+.mb-wrap .mb-spread:has(.v-classic:not(.op-page)) {
+  box-shadow:
+    0 1px 0 #E3DBC6, 0 2px 0 #D9D0B8, 0 3px 0 #CFC5AB, 0 4px 0 #C5BB9F, 0 5px 0 #BBB093, 0 6px 0 #B0A586,
+    0 36px 50px -22px rgba(27, 27, 51, .5), 0 10px 22px rgba(27, 27, 51, .14);
+}
+.mb-wrap .mb-spread:has(.v-classic:not(.op-page)) .mb-spine {
+  width: 10px;
+  background: linear-gradient(to right, #E8DDBF, #BCAA7C 48%, #FFF9E4 52%, #E8DDBF);
+  box-shadow: inset 0 0 8px rgba(90, 65, 15, .35);
+}
+[data-theme="dark"] .mb-wrap .mb-page.v-classic:not(.op-page) { background-color: #F3ECD4; }
+
+@media (max-width: 820px) {
+  .mb-wrap .mb-spread { box-shadow: none; }
+  .mb-wrap .mb-page.v-easy { border-radius: 12px; box-shadow: inset 0 0 0 1px rgba(201, 162, 75, .45), 0 18px 40px -22px rgba(0, 0, 0, .55); background-image: none; }
+  .mb-wrap .mb-arrow { width: 38px; height: 38px; }
+}
 @media (prefers-reduced-motion: reduce) { .mb-wrap .mb-arrow { transition: none; } }
 
 /* ── Selected-ayah card ── */

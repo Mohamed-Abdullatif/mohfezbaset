@@ -1922,7 +1922,6 @@ html[dir="ltr"] .mr-select, html[dir="ltr"] .mr-reciter, html[dir="ltr"] .recite
    OPENING PAGES — indigo & gold frame (Al-Fatiha / Al-Baqarah)
    ================================================ */
 .mb-page.op-page { aspect-ratio: 651 / 972; background: #FEF9EE !important; border-radius: 6px; box-shadow: 0 0 0 3px #F1EBDD; overflow: hidden; }
-.op-frame { position: absolute; inset: 0; width: 100%; height: 100%; display: block; user-select: none; pointer-events: none; }
 .op-name {
   position: absolute; left: 48.4%; top: 10.9%; transform: translate(-50%, -50%);
   font-family: 'Amiri Quran', 'Amiri', serif; font-weight: 700; font-size: 5.6cqw; line-height: 1.2;

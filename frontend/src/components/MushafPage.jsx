@@ -283,9 +283,11 @@ export default function MushafPage({
   if (OPENING) {
     return (
       <div className={`mb-page mb-page-${side} mb-opening op-page${tajweed ? '' : ' no-tajweed'}${phrases ? '' : ' no-phrases'} v-${variant}`}>
-        <img className="op-frame" src={`${import.meta.env.BASE_URL}opening-frame.webp`} alt="" draggable="false" />
+        <div className="op-rule" aria-hidden="true" />
+        {['tl', 'tr', 'bl', 'br'].map(c => <span key={c} className={`op-corner ${c}`} aria-hidden="true" />)}
         <div className="op-name">{OPEN_NAMES[pageNum]}</div>
         <div className="op-body-wrap">{bodyEl}</div>
+        <span className="op-pageno">{toArabicNum(pageNum)}</span>
       </div>
     );
   }
