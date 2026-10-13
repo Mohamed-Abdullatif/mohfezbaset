@@ -5,6 +5,7 @@ import { fetchQcfPage, loadQcfFont } from '../utils/qcf';
 import { ayahRecord } from '../utils/quranMeta';
 import Toast from './Toast';
 import MushafPage from './MushafPage';
+import './book.css';
 
 const FALLBACK_RECITER = 'ar.alafasy';
 const REPEAT_OPTIONS = [1, 3, 5, 10, 0]; // 0 = loop until stopped

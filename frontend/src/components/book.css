@@ -1,0 +1,68 @@
+/* Open-book look: page depth, spine crease, gold page numbers, gradient arrows, study toolbar card. Scoped under .mb-wrap. */
+
+/* book body: stacked page edges + soft ground shadow */
+.mb-wrap .mb-spread {
+  border-radius: 12px;
+  box-shadow:
+    0 1px 0 #DDD6C3, 0 2px 0 #D2CAB4, 0 3px 0 #C8BFA8, 0 4px 0 #BEB59D,
+    0 34px 50px -22px rgba(27, 27, 51, .45), 0 10px 22px rgba(27, 27, 51, .12);
+}
+[data-theme="dark"] .mb-wrap .mb-spread {
+  box-shadow: 0 1px 0 #3A3A55, 0 2px 0 #2F2F48, 0 3px 0 #26263D, 0 34px 50px -18px rgba(0, 0, 0, .75);
+}
+
+/* easy-mushaf pages: ivory-blue paper, thin gold edge, shading that falls toward the spine */
+.mb-wrap .mb-page.v-easy {
+  box-shadow: inset 0 0 0 1px rgba(201, 162, 75, .45), inset 0 0 0 4px rgba(255, 255, 255, .85);
+  background-color: #EAF6FB;
+}
+.mb-wrap .mb-page-left.v-easy {
+  border-radius: 12px 0 0 12px;
+  background-image: linear-gradient(to left, rgba(40, 70, 90, .13), rgba(40, 70, 90, 0) 11%);
+}
+.mb-wrap .mb-page-right.v-easy {
+  border-radius: 0 12px 12px 0;
+  background-image: linear-gradient(to right, rgba(40, 70, 90, .13), rgba(40, 70, 90, 0) 11%);
+}
+.mb-wrap .mb-spread:has(.v-easy) .mb-spine {
+  width: 8px;
+  background: linear-gradient(to right, #D3E5EE, #AFC8D4 50%, #D3E5EE);
+  box-shadow: inset 0 0 6px rgba(27, 60, 80, .25);
+}
+/* single page (no partner): keep it fully rounded */
+.mb-wrap .mb-page.v-easy.mb-blank { box-shadow: none; }
+
+.mb-wrap .mb-page.v-easy .mb-pageno {
+  padding: 0 10px; border-radius: 999px; bottom: .5cqw; line-height: 1.5;
+  font-family: var(--font-ar); font-size: .7rem; font-weight: 700; color: #8A6B22;
+  background: rgba(255, 255, 255, .75); border: 1px solid rgba(201, 162, 75, .5);
+}
+
+/* page-turn arrows */
+.mb-wrap .mb-arrow {
+  width: 50px; height: 50px; border: none; color: #fff; cursor: pointer;
+  background: linear-gradient(135deg, var(--indigo), var(--green));
+  box-shadow: 0 10px 22px rgba(47, 43, 124, .35);
+  transition: transform .2s, box-shadow .2s;
+}
+.mb-wrap .mb-arrow:hover:not(.disabled) { transform: scale(1.1); background: linear-gradient(135deg, var(--indigo), var(--green)); box-shadow: 0 14px 28px rgba(47, 43, 124, .45); }
+.mb-wrap .mb-arrow:active:not(.disabled) { transform: scale(.96); }
+.mb-wrap .mb-arrow:focus-visible { outline: 3px solid var(--gold-lt); outline-offset: 3px; }
+[data-theme="dark"] .mb-wrap .mb-arrow { color: #14142B; background: linear-gradient(135deg, var(--green), var(--green-lt)); box-shadow: 0 10px 22px rgba(0, 0, 0, .5); }
+
+/* study toolbar below the book: floating card with pill chips */
+.mb-wrap > .study-panel { background: transparent; border-top: none; padding: 0 16px 36px; }
+.mb-wrap .study-toolbar {
+  width: fit-content; max-width: 100%; margin: 0 auto 18px; padding: 10px 14px; gap: 8px 10px;
+  background: var(--bg-card); border: 1px solid var(--border); border-radius: 20px; box-shadow: var(--shadow-lg);
+}
+.mb-wrap .study-chip.on { border-color: transparent; color: #fff; background: linear-gradient(135deg, var(--indigo), var(--green)); box-shadow: 0 4px 12px rgba(47, 43, 124, .25); }
+[data-theme="dark"] .mb-wrap .study-chip.on { color: #14142B; background: linear-gradient(135deg, var(--green), var(--green-lt)); box-shadow: none; }
+.mb-wrap .study-actions { border-radius: 18px; box-shadow: var(--shadow); }
+
+@media (max-width: 820px) {
+  .mb-wrap .mb-spread { box-shadow: none; }
+  .mb-wrap .mb-page.v-easy { border-radius: 12px; box-shadow: inset 0 0 0 1px rgba(201, 162, 75, .45), 0 18px 40px -22px rgba(0, 0, 0, .55); background-image: none; }
+  .mb-wrap .mb-arrow { width: 38px; height: 38px; }
+}
+@media (prefers-reduced-motion: reduce) { .mb-wrap .mb-arrow { transition: none; } }
