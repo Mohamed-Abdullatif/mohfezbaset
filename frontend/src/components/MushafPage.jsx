@@ -19,14 +19,40 @@ const LEGEND = [
 
 
 // Surah header: tan frame · scrollwork wings · green medallions (ayah count / order) · pointed name cartouche
+// Pointed end of the banner frame (tip on the left; the right end is the same shape mirrored in CSS)
+const BannerCap = ({ flip }) => (
+  <svg className={`sb-cap${flip ? ' flip' : ''}`} viewBox="0 0 120 100" preserveAspectRatio="xMaxYMid meet" aria-hidden="true">
+    <path className="sb-fill" d="M120 4H40L4 50l36 46H120Z" />
+    <path d="M120 4H40L4 50l36 46H120" fill="none" stroke="#C9A24B" strokeWidth="2.2" strokeLinejoin="miter" vectorEffect="non-scaling-stroke" />
+    <path d="M120 11H44L14 50l30 39H120" fill="none" stroke="#2B2778" strokeWidth="1.1" opacity=".65" vectorEffect="non-scaling-stroke" />
+    {/* scroll flourishes tucked into the top and bottom corners */}
+    <g fill="none" stroke="#C9A24B" strokeWidth="1.6" strokeLinecap="round" vectorEffect="non-scaling-stroke">
+      <path d="M120 11C98 11 76 12 70 21C66 28 75 33 79 27C82 22 75 19 72 23" vectorEffect="non-scaling-stroke" />
+      <path d="M120 89C98 89 76 88 70 79C66 72 75 67 79 73C82 78 75 81 72 77" vectorEffect="non-scaling-stroke" />
+      <path d="M52 20C58 26 58 32 54 36" vectorEffect="non-scaling-stroke" />
+      <path d="M52 80C58 74 58 68 54 64" vectorEffect="non-scaling-stroke" />
+    </g>
+    <g fill="#C9A24B">
+      <path d="M26 50l9-11 9 11-9 11z" />
+      <circle cx="4" cy="50" r="2.8" />
+      <circle cx="50" cy="38" r="1.7" /><circle cx="50" cy="62" r="1.7" />
+      <circle cx="84" cy="21" r="1.5" /><circle cx="84" cy="79" r="1.5" />
+    </g>
+  </svg>
+);
+
 function SurahBanner({ surah }) {
   return (
     <div className="sb">
-      <span className="sb-side"><small>ترتيبها</small><b>{toArabicNum(surah.number)}</b></span>
-      <span className="sb-rule" aria-hidden="true" />
-      <span className="sb-name">{surah.name}</span>
-      <span className="sb-rule" aria-hidden="true" />
-      <span className="sb-side"><small>آياتها</small><b>{toArabicNum(surah.numberOfAyahs)}</b></span>
+      <BannerCap />
+      <div className="sb-mid">
+        <span className="sb-side"><small>ترتيبها</small><b>{toArabicNum(surah.number)}</b></span>
+        <span className="sb-rule" aria-hidden="true" />
+        <span className="sb-name">{surah.name}</span>
+        <span className="sb-rule" aria-hidden="true" />
+        <span className="sb-side"><small>آياتها</small><b>{toArabicNum(surah.numberOfAyahs)}</b></span>
+      </div>
+      <BannerCap flip />
     </div>
   );
 }
