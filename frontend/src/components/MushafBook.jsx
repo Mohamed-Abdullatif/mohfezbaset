@@ -200,6 +200,12 @@ export default function MushafBook({ pages, reciterId, showTools, nav }) {
 
   return (
     <div className="mb-wrap">
+      {hideText && (
+        <div className="mb-mode-banner" role="status">
+          <span aria-hidden="true">🙈</span>
+          {L('وضع الحفظ — اضغط على أي آية لإظهارها', 'Memorize mode — tap any ayah to reveal it')}
+        </div>
+      )}
       <div className="mb-stage">
         {/* A Mushaf turns right-to-left in every language: left arrow = next page, right arrow = previous */}
         <button className={`mb-arrow${!nav.canNext ? ' disabled' : ''}`} onClick={nav.onNext} aria-label="next page"><span className="mb-chev flip"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" strokeWidth="3.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M9 4.5l7.5 7.5L9 19.5" /></svg></span></button>
