@@ -4,11 +4,22 @@ import axios from 'axios';
 import { useApp } from '../context/AppContext';
 import './home.css';
 
+const Icon = ({ children }) => (
+  <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{children}</svg>
+);
+
 const FEATURES = [
-  { icon: '🎧', titleKey: 'feat1Title', descKey: 'feat1Desc' },
-  { icon: '📈', titleKey: 'feat2Title', descKey: 'feat2Desc' },
-  { icon: '🔖', titleKey: 'feat3Title', descKey: 'feat3Desc' },
-  { icon: '📥', titleKey: 'feat4Title', descKey: 'feat4Desc' },
+  { titleKey: 'feat1Title', descKey: 'feat1Desc', icon: <Icon><path d="M4 14v-2a8 8 0 0 1 16 0v2" /><rect x="3" y="14" width="4" height="6" rx="1.5" /><rect x="17" y="14" width="4" height="6" rx="1.5" /></Icon> },
+  { titleKey: 'feat2Title', descKey: 'feat2Desc', icon: <Icon><path d="M3 17l6-6 4 4 8-8" /><path d="M15 7h6v6" /></Icon> },
+  { titleKey: 'feat3Title', descKey: 'feat3Desc', icon: <Icon><path d="M6 3h12a1 1 0 0 1 1 1v17l-7-4-7 4V4a1 1 0 0 1 1-1z" /></Icon> },
+  { titleKey: 'feat4Title', descKey: 'feat4Desc', icon: <Icon><path d="M12 3v12" /><path d="M7 11l5 5 5-5" /><path d="M4 20h16" /></Icon> },
+];
+
+const STAT_ICONS = [
+  <Icon key="s"><path d="M2 4h6a4 4 0 0 1 4 4v13a3 3 0 0 0-3-3H2z" /><path d="M22 4h-6a4 4 0 0 0-4 4v13a3 3 0 0 1 3-3h7z" /></Icon>,
+  <Icon key="r"><circle cx="12" cy="9" r="3" /><path d="M5 21a7 7 0 0 1 14 0" /><path d="M2 13a10 10 0 0 1 3-7M22 13a10 10 0 0 0-3-7" /></Icon>,
+  <Icon key="m"><circle cx="12" cy="12" r="9" /><path d="M8 12.5l3 3 5-6" /></Icon>,
+  <Icon key="v"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z" /><circle cx="12" cy="12" r="3" /></Icon>,
 ];
 
 const STEPS = [
@@ -48,7 +59,7 @@ export default function Home() {
   const stats = [
     { val: fmt(114), label: t.surah },
     { val: fmt(38), label: t.reciters },
-    { val: user ? fmt(completedSurahs) : '—', label: isAr ? 'سور محفوظة' : 'Memorized' },
+    { val: fmt(user ? completedSurahs : 0), label: isAr ? 'سور محفوظة' : 'Memorized' },
     { val: visitors !== null ? fmt(visitors) : '…', label: isAr ? 'زائر' : 'Visitors' },
   ];
 
@@ -102,8 +113,9 @@ export default function Home() {
 
       {/* ── Stats ── */}
       <section className="hm-stats">
-        {stats.map(s => (
+        {stats.map((s, i) => (
           <div key={s.label} className="hm-stat">
+            <div className="hm-stat-icon">{STAT_ICONS[i]}</div>
             <div className="hm-stat-val">{s.val}</div>
             <div className="hm-stat-label">{s.label}</div>
           </div>
