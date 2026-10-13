@@ -335,32 +335,44 @@
 .mb-wrap .study-hint { padding: 6px 0; }
 @media (max-width: 640px) { .mb-wrap .study-actions-row { flex-direction: column; align-items: stretch; } .study-buttons .btn-sm { flex: 1; justify-content: center; } }
 
-/* ── Surah banner: framed cartouche ──
-   pointed gold-and-indigo ends joined by a double rule, scroll curls in the corners,
-   name centred on a soft glow, rank / ayah-count medallions inside */
+/* ── Surah banner: ornate cartouche ──
+   two pointed, scrolled ends (each holds a medallion) joined by a double rule; the name sits centred between them */
 .mb-wrap .sb {
   --sb-fill: rgba(255, 252, 238, .6);
   position: relative; box-sizing: border-box; height: calc(var(--row) * 1.4); margin: 0; padding: 0 .1em;
   display: flex; align-items: stretch; direction: ltr;
   font-family: 'Amiri Quran', 'Amiri', serif; -webkit-text-stroke: 0;
 }
+.mb-wrap .sb-end { position: relative; flex: none; height: 100%; display: flex; }
 .mb-wrap .sb-cap { flex: none; height: 100%; width: auto; display: block; overflow: visible; }
 .mb-wrap .sb-cap.flip { transform: scaleX(-1); }
 .mb-wrap .sb-fill { fill: var(--sb-fill); }
 
+/* medallion centred at x=70 of the 170-wide cap (41.2% from the tip side), 62% of the banner height */
+.mb-wrap .sb-side {
+  position: absolute; top: 50%; left: 41.18%; transform: translate(-50%, -50%);
+  height: 62%; aspect-ratio: 1; width: auto;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; line-height: 1; color: #2B2778;
+  border-radius: 50%; background: #FCF8EA; border: 1.5px solid #C9A24B;
+  box-shadow: inset 0 0 0 2px #FCF8EA, inset 0 0 0 3px rgba(43, 39, 120, .45);
+}
+.mb-wrap .sb-end-r .sb-side { left: auto; right: 41.18%; transform: translate(50%, -50%); }
+.mb-wrap .sb-side small { font-size: calc(var(--row) * .19); font-weight: 700; color: #8A6B22; margin-bottom: .1em; }
+.mb-wrap .sb-side b { font-family: 'Amiri', serif; font-size: calc(var(--row) * .34); transform: translateY(.04em); }
+
 .mb-wrap .sb-mid {
-  position: relative; flex: 1 1 0; min-width: 0; direction: rtl;
-  display: flex; align-items: center; gap: .55em; padding: 0 .3em;
+  position: relative; flex: 1 1 0; min-width: 0; direction: ltr;
+  display: flex; align-items: center; gap: .5em; padding: 0 .3em;
   background:
     radial-gradient(ellipse 38% 90% at 50% 50%, rgba(255, 255, 255, .85), rgba(255, 255, 255, 0) 100%),
     var(--sb-fill);
 }
 .mb-wrap .sb-mid::before { /* gold rails at the cap's outer line height */
-  content: ''; position: absolute; inset-inline: -1px; top: 5%; bottom: 5%; pointer-events: none;
-  border-block: 2.2px solid #C9A24B;
+  content: ''; position: absolute; inset-inline: -1px; top: calc(5% - 1.2px); bottom: calc(5% - 1.2px); pointer-events: none;
+  border-block: 2.4px solid #C9A24B;
 }
 .mb-wrap .sb-mid::after { /* indigo hairlines at the cap's inner line height */
-  content: ''; position: absolute; inset-inline: -1px; top: 12%; bottom: 12%; pointer-events: none;
+  content: ''; position: absolute; inset-inline: -1px; top: calc(12% - .55px); bottom: calc(12% - .55px); pointer-events: none;
   border-block: 1.1px solid rgba(43, 39, 120, .65);
 }
 
@@ -371,30 +383,20 @@
   transform: translateY(-.34em);
 }
 
-/* rules with a diamond where they meet the name */
-.mb-wrap .sb-rule { position: relative; flex: 1 1 0; min-width: 8px; height: 1.5px; background: linear-gradient(to left, #C9A24B, rgba(201, 162, 75, .1)); }
+/* rules fade away from the name; a diamond marks the end that touches it */
+.mb-wrap .sb-rule { position: relative; flex: 1 1 0; min-width: 6px; height: 1.5px; background: linear-gradient(to left, #C9A24B, rgba(201, 162, 75, .1)); }
 .mb-wrap .sb-name ~ .sb-rule { background: linear-gradient(to right, #C9A24B, rgba(201, 162, 75, .1)); }
 .mb-wrap .sb-rule::before {
-  content: ''; position: absolute; top: 50%; inset-inline-start: 0; width: calc(var(--row) * .2); height: calc(var(--row) * .2);
+  content: ''; position: absolute; top: 50%; right: 0; width: calc(var(--row) * .2); height: calc(var(--row) * .2);
   background: #C9A24B; transform: translateY(-50%) rotate(45deg);
 }
+.mb-wrap .sb-name ~ .sb-rule::before { right: auto; left: 0; }
 
-/* side medallions */
-.mb-wrap .sb-side {
-  flex: none; width: calc(var(--row) * .96); height: calc(var(--row) * .96);
-  display: flex; flex-direction: column; align-items: center; justify-content: center; line-height: 1; color: #2B2778;
-  border-radius: 50%; background: #FCF8EA; border: 1.5px solid #C9A24B;
-  box-shadow: inset 0 0 0 2px #FCF8EA, inset 0 0 0 3px rgba(43, 39, 120, .45);
-}
-.mb-wrap .sb-side small { font-size: calc(var(--row) * .2); font-weight: 700; color: #8A6B22; margin-bottom: .1em; }
-.mb-wrap .sb-side b { font-family: 'Amiri', serif; font-size: calc(var(--row) * .36); transform: translateY(.04em); }
-
-/* narrow pages: tighten the banner so the medallions, rules and name never overflow */
+/* narrow pages: slightly smaller name and tighter gaps */
 @container (max-width: 420px) {
   .mb-wrap .sb-mid { gap: .3em; padding: 0 .2em; }
-  .mb-wrap .sb-side { width: calc(var(--row) * .86); height: calc(var(--row) * .86); }
-  .mb-wrap .sb-side small { font-size: calc(var(--row) * .18); }
-  .mb-wrap .sb-side b { font-size: calc(var(--row) * .32); }
-  .mb-wrap .sb-name { font-size: calc(var(--row) * .68); }
+  .mb-wrap .sb-name { font-size: calc(var(--row) * .66); }
+  .mb-wrap .sb-side small { font-size: calc(var(--row) * .17); }
+  .mb-wrap .sb-side b { font-size: calc(var(--row) * .3); }
   .mb-wrap .sb-rule { min-width: 4px; }
 }

@@ -20,56 +20,53 @@ const LEGEND = [
 
 // Surah header: tan frame · scrollwork wings · green medallions (ayah count / order) · pointed name cartouche
 // Ornate end of the banner frame (tip on the left; the right end is the same shape mirrored in CSS).
-// Rounded corners, a pointed bump in the middle, a double line (gold outer, indigo inner),
-// double-curl scroll volutes with leaves and beads in each corner, and a finial at the tip.
+// Rounded corners, a pointed bump in the middle, a double line (gold outer, indigo inner), a finial at the tip,
+// room for a medallion (HTML, centred at x=70) and double-curl scrolls with leaves running along the rails.
 const BannerCap = ({ flip }) => (
-  <svg className={`sb-cap${flip ? ' flip' : ''}`} viewBox="0 0 150 100" preserveAspectRatio="xMaxYMid meet" aria-hidden="true">
-    <path className="sb-fill" d="M150 5H50C30 5 15 15 15 33V39C15 44 8 47 3 50C8 53 15 56 15 61V67C15 85 30 95 50 95H150Z" />
-    <path d="M150 5H50C30 5 15 15 15 33V39C15 44 8 47 3 50C8 53 15 56 15 61V67C15 85 30 95 50 95H150" fill="none" stroke="#C9A24B" strokeWidth="2.4" vectorEffect="non-scaling-stroke" />
-    <path d="M150 12H52C36 12 23 20 23 34V40C23 45 19 48 15 50C19 52 23 55 23 60V66C23 80 36 88 52 88H150" fill="none" stroke="#2B2778" strokeWidth="1.1" opacity=".7" vectorEffect="non-scaling-stroke" />
+  <svg className={`sb-cap${flip ? ' flip' : ''}`} viewBox="0 0 170 100" preserveAspectRatio="xMaxYMid meet" aria-hidden="true">
+    <path className="sb-fill" d="M170 5H50C30 5 15 15 15 33V39C15 44 8 47 3 50C8 53 15 56 15 61V67C15 85 30 95 50 95H170Z" />
+    <path d="M170 5H50C30 5 15 15 15 33V39C15 44 8 47 3 50C8 53 15 56 15 61V67C15 85 30 95 50 95H170" fill="none" stroke="#C9A24B" strokeWidth="2.4" vectorEffect="non-scaling-stroke" />
+    <path d="M170 12H52C36 12 23 20 23 34V40C23 45 19 48 15 50C19 52 23 55 23 60V66C23 80 36 88 52 88H170" fill="none" stroke="#2B2778" strokeWidth="1.1" opacity=".7" vectorEffect="non-scaling-stroke" />
 
-    {/* top corner scrolls: a long volute running in from the rail, and a second one curling the other way */}
     <g fill="none" stroke="#C9A24B" strokeWidth="2" strokeLinecap="round" vectorEffect="non-scaling-stroke">
-      <path d="M150 12C128 12 106 12 92 16C78 20 74 33 84 38C94 43 104 33 98 26C94 21 86 25 88 30" vectorEffect="non-scaling-stroke" />
-      <path d="M66 12C54 12 44 17 41 26C38 36 48 43 56 37C62 32 57 25 51 28" vectorEffect="non-scaling-stroke" />
-      <path d="M30 23C31 30 36 35 43 37" strokeWidth="1.6" vectorEffect="non-scaling-stroke" />
-    </g>
-    {/* bottom corner (mirrored) */}
-    <g fill="none" stroke="#C9A24B" strokeWidth="2" strokeLinecap="round" vectorEffect="non-scaling-stroke">
-      <path d="M150 88C128 88 106 88 92 84C78 80 74 67 84 62C94 57 104 67 98 74C94 79 86 75 88 70" vectorEffect="non-scaling-stroke" />
-      <path d="M66 88C54 88 44 83 41 74C38 64 48 57 56 63C62 68 57 75 51 72" vectorEffect="non-scaling-stroke" />
-      <path d="M30 77C31 70 36 65 43 63" strokeWidth="1.6" vectorEffect="non-scaling-stroke" />
+      {/* top: a volute running in from the rail, with a small answering curl */}
+      <path d="M170 12C150 12 130 12 118 16C106 20 103 33 112 37C121 41 130 32 125 25C121 21 114 24 116 29" vectorEffect="non-scaling-stroke" />
+      <path d="M170 12C166 12 160 14 158 20C156 27 163 31 167 27" strokeWidth="1.6" vectorEffect="non-scaling-stroke" />
+      {/* bottom: mirrored */}
+      <path d="M170 88C150 88 130 88 118 84C106 80 103 67 112 63C121 59 130 68 125 75C121 79 114 76 116 71" vectorEffect="non-scaling-stroke" />
+      <path d="M170 88C166 88 160 86 158 80C156 73 163 69 167 73" strokeWidth="1.6" vectorEffect="non-scaling-stroke" />
     </g>
 
     <g fill="#C9A24B">
-      {/* leaves sprouting from the volutes */}
-      <path d="M122 13C126 20 122 26 114 26C114 19 117 15 122 13Z" />
-      <path d="M122 87C126 80 122 74 114 74C114 81 117 85 122 87Z" />
-      <path d="M72 13C76 19 72 24 66 24C66 18 68 15 72 13Z" />
-      <path d="M72 87C76 81 72 76 66 76C66 82 68 85 72 87Z" />
-      {/* tip finial: diamond */}
-      <path d="M27 50l9-10 9 10-9 10z" />
+      {/* leaves and beads along the rails */}
+      <path d="M146 13C150 19 146 25 138 25C138 18 141 15 146 13Z" />
+      <path d="M146 87C150 81 146 75 138 75C138 82 141 85 146 87Z" />
+      <circle cx="132" cy="30" r="1.6" /><circle cx="132" cy="70" r="1.6" />
+      {/* tip finial */}
+      <path d="M21 50l8-9 8 9-8 9z" />
       <circle cx="3" cy="50" r="2.8" />
-      {/* beads */}
-      <circle cx="53" cy="50" r="1.8" /><circle cx="60" cy="50" r="1.2" />
-      <circle cx="33" cy="22" r="1.7" /><circle cx="33" cy="78" r="1.7" />
-      <circle cx="108" cy="30" r="1.6" /><circle cx="108" cy="70" r="1.6" />
+      <circle cx="40" cy="50" r="1.5" />
     </g>
   </svg>
+);
+
+const BannerEnd = ({ flip, label, value }) => (
+  <div className={`sb-end${flip ? ' sb-end-r' : ''}`}>
+    <BannerCap flip={flip} />
+    <span className="sb-side"><small>{label}</small><b>{value}</b></span>
+  </div>
 );
 
 function SurahBanner({ surah }) {
   return (
     <div className="sb">
-      <BannerCap />
+      <BannerEnd label="آياتها" value={toArabicNum(surah.numberOfAyahs)} />
       <div className="sb-mid">
-        <span className="sb-side"><small>ترتيبها</small><b>{toArabicNum(surah.number)}</b></span>
         <span className="sb-rule" aria-hidden="true" />
         <span className="sb-name">{surah.name}</span>
         <span className="sb-rule" aria-hidden="true" />
-        <span className="sb-side"><small>آياتها</small><b>{toArabicNum(surah.numberOfAyahs)}</b></span>
       </div>
-      <BannerCap flip />
+      <BannerEnd flip label="ترتيبها" value={toArabicNum(surah.number)} />
     </div>
   );
 }
