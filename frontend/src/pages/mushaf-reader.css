@@ -1,0 +1,66 @@
+/* Full Mushaf reader chrome — compact gradient header, pill controls, gold progress. Scoped under .mr-root. */
+.mr-root .mr-header {
+  position: sticky; top: 0; z-index: 100; isolation: isolate;
+  display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+  padding: 10px 22px; color: #fff; border: none; border-radius: 0;
+  background:
+    radial-gradient(600px 160px at 85% -60%, rgba(212, 178, 110, .3), transparent 60%),
+    linear-gradient(135deg, var(--indigo) 0%, var(--green) 100%);
+  box-shadow: 0 6px 20px rgba(27, 27, 51, .18);
+}
+[data-theme="dark"] .mr-root .mr-header { background: radial-gradient(600px 160px at 85% -60%, rgba(212, 178, 110, .18), transparent 60%), linear-gradient(135deg, #25226B, #3A35A0); }
+.mr-root .mr-header::after {
+  content: ''; position: absolute; inset-inline: 0; bottom: 0; height: 1px; z-index: -1;
+  background: linear-gradient(90deg, transparent, var(--gold-lt), transparent); opacity: .7;
+}
+
+.mr-root .mr-back-btn {
+  display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; border-radius: 999px;
+  color: #fff; font-size: .84rem; background: rgba(255, 255, 255, .12); border: 1px solid rgba(255, 255, 255, .25);
+  transition: background .2s, transform .2s;
+}
+.mr-root .mr-back-btn:hover { background: rgba(255, 255, 255, .22); transform: translateY(-1px); }
+.mr-root .mr-header-center { gap: 8px; }
+.mr-root .mr-header-right { gap: 8px; }
+
+/* pill controls (use background-color so the select arrow image from index.css survives) */
+.mr-root .mr-select, .mr-root .mr-reciter, .mr-root .mr-jump, .mr-root .mr-trigger {
+  height: 38px; padding-block: 0; border-radius: 999px; font-size: .84rem; color: #fff;
+  background-color: rgba(255, 255, 255, .12); border: 1px solid rgba(255, 255, 255, .25); box-shadow: none; backdrop-filter: none;
+  transition: background-color .2s, border-color .2s, box-shadow .2s;
+}
+.mr-root .mr-select:hover, .mr-root .mr-reciter:hover, .mr-root .mr-trigger:hover { background-color: rgba(255, 255, 255, .2); border-color: rgba(255, 255, 255, .45); transform: none; }
+.mr-root .mr-select:focus, .mr-root .mr-reciter:focus, .mr-root .mr-jump:focus { outline: none; border-color: var(--gold-lt); box-shadow: 0 0 0 3px rgba(212, 178, 110, .25); background-color: rgba(255, 255, 255, .2); }
+.mr-root .mr-trigger { padding-inline: 18px; font-size: .95rem; font-family: var(--font-quran); }
+.mr-root .mr-jump { width: 78px; text-align: center; }
+.mr-root .mr-select option, .mr-root .mr-reciter option { background: var(--bg-card); color: var(--text); }
+
+.mr-root .mr-badge {
+  padding: 6px 16px; border-radius: 999px; font-size: .78rem; font-weight: 700; letter-spacing: .02em;
+  color: #2A2358; background: linear-gradient(135deg, #E2C688, #C9A055); border: none; box-shadow: 0 3px 10px rgba(10, 8, 50, .25);
+}
+
+/* round icon buttons; "on" state turns gold */
+.mr-root .mr-listen-btn {
+  width: 38px; height: 38px; border-radius: 50%; font-size: 1rem;
+  background: rgba(255, 255, 255, .12); border: 1px solid rgba(255, 255, 255, .25); box-shadow: none; backdrop-filter: none;
+}
+.mr-root .mr-listen-btn:hover { background: rgba(255, 255, 255, .22); transform: translateY(-1px); box-shadow: none; }
+.mr-root .mr-listen-btn.on { background: linear-gradient(135deg, #E2C688, #C9A055); border-color: transparent; box-shadow: 0 3px 10px rgba(10, 8, 50, .3); }
+
+/* dropdown inherits the card look from the surah reader */
+.mr-root .surah-dropdown { width: 250px; border-radius: 16px; padding: 6px; border: 1px solid var(--border); box-shadow: var(--shadow-lg); background: var(--bg-card); }
+.mr-root .surah-dropdown-item { border: none; border-radius: 10px; padding: 8px 10px; }
+
+/* reading progress */
+.mr-root .mr-progress { height: 5px; background: var(--border); }
+.mr-root .mr-progress-fill { background: linear-gradient(90deg, var(--green), var(--gold)); border-radius: 0 999px 999px 0; }
+html[dir="rtl"] .mr-root .mr-progress-fill { border-radius: 999px 0 0 999px; margin-inline-start: auto; }
+
+@media (max-width: 768px) {
+  .mr-root .mr-header { position: static; padding: 8px 12px; gap: 8px; }
+  .mr-root .mr-header-center { order: 3; width: 100%; justify-content: center; }
+  .mr-root .mr-select, .mr-root .mr-jump, .mr-root .mr-trigger { height: 34px; }
+  .mr-root .mr-listen-btn { width: 34px; height: 34px; }
+}
+@media (prefers-reduced-motion: reduce) { .mr-root .mr-back-btn, .mr-root .mr-listen-btn { transition: none; } }

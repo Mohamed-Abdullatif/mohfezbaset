@@ -6,6 +6,7 @@ import AudioPlayer from '../components/AudioPlayer';
 import MushafBook from '../components/MushafBook';
 import { hizbStartPage, playFlipSound } from '../utils/quranApi';
 import { fetchQcfPage } from '../utils/qcf';
+import './mushaf-reader.css';
 
 const TOTAL_PAGES = 604;
 

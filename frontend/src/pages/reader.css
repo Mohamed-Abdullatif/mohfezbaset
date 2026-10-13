@@ -45,9 +45,10 @@
 .mushaf-container .surah-selector-trigger:hover { background: var(--green-pale); color: var(--green); transform: none; box-shadow: none; }
 .mushaf-container .reciter-select {
   height: 36px; padding: 0 14px; border-radius: 12px; font-size: .86rem; color: var(--text);
-  background: var(--bg-raised); border: 1px solid transparent; box-shadow: none; cursor: pointer;
+  background-color: var(--bg-raised); border: 1px solid transparent; box-shadow: none; cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' fill='none' stroke='%23888' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M1 1l4 4 4-4'/%3E%3C/svg%3E");
 }
-.mushaf-container .reciter-select:focus { border-color: var(--green); box-shadow: 0 0 0 3px var(--green-glow); background: var(--bg-card); }
+.mushaf-container .reciter-select:focus { border-color: var(--green); box-shadow: 0 0 0 3px var(--green-glow); background-color: var(--bg-card); }
 .mushaf-container .mushaf-controls .btn-sm { height: 36px; padding: 0 16px; border-radius: 12px; font-weight: 600; display: inline-flex; align-items: center; gap: 6px; }
 .mushaf-container .mushaf-controls .btn-primary { background: linear-gradient(135deg, var(--indigo), var(--green)); box-shadow: 0 4px 12px rgba(47, 43, 124, .25); }
 [data-theme="dark"] .mushaf-container .mushaf-controls .btn-primary { background: linear-gradient(135deg, var(--green), var(--green-lt)); color: #14142B; box-shadow: none; }
