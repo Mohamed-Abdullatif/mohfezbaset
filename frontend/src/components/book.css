@@ -356,7 +356,7 @@
 .mb-wrap .sb-name {
   flex: none; display: block; line-height: 1; white-space: nowrap; font-weight: 700;
   font-size: calc(var(--row) * .74); color: #2B2778; text-shadow: 0 1px 0 rgba(255, 255, 255, .9);
-  transform: translateY(-.2em);
+  transform: translateY(-.34em);
 }
 
 /* rules with a diamond where they meet the name, and a dot at the outer end */
