@@ -9,6 +9,11 @@
   box-shadow: 0 6px 20px rgba(27, 27, 51, .18);
 }
 [data-theme="dark"] .mr-root .mr-header { background: radial-gradient(600px 160px at 85% -60%, rgba(212, 178, 110, .18), transparent 60%), linear-gradient(135deg, #25226B, #3A35A0); }
+.mr-root .mr-header::before {
+  content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none; opacity: .12;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='72' height='72' viewBox='0 0 72 72'%3E%3Cpath d='M36 4l8 18 18 8-18 8-8 18-8-18-18-8 18-8z' fill='none' stroke='%23fff' stroke-width='1.2'/%3E%3C/svg%3E");
+  background-position: center;
+}
 .mr-root .mr-header::after {
   content: ''; position: absolute; inset-inline: 0; bottom: 0; height: 1px; z-index: -1;
   background: linear-gradient(90deg, transparent, var(--gold-lt), transparent); opacity: .7;
