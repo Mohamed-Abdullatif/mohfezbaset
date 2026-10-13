@@ -19,24 +19,41 @@ const LEGEND = [
 
 
 // Surah header: tan frame · scrollwork wings · green medallions (ayah count / order) · pointed name cartouche
-// Pointed end of the banner frame (tip on the left; the right end is the same shape mirrored in CSS)
+// Ornate end of the banner frame (tip on the left; the right end is the same shape mirrored in CSS).
+// Rounded corners, a pointed bump in the middle, a double line (gold outer, indigo inner),
+// double-curl scroll volutes with leaves and beads in each corner, and a finial at the tip.
 const BannerCap = ({ flip }) => (
-  <svg className={`sb-cap${flip ? ' flip' : ''}`} viewBox="0 0 120 100" preserveAspectRatio="xMaxYMid meet" aria-hidden="true">
-    <path className="sb-fill" d="M120 4H40L4 50l36 46H120Z" />
-    <path d="M120 4H40L4 50l36 46H120" fill="none" stroke="#C9A24B" strokeWidth="2.2" strokeLinejoin="miter" vectorEffect="non-scaling-stroke" />
-    <path d="M120 11H44L14 50l30 39H120" fill="none" stroke="#2B2778" strokeWidth="1.1" opacity=".65" vectorEffect="non-scaling-stroke" />
-    {/* scroll flourishes tucked into the top and bottom corners */}
-    <g fill="none" stroke="#C9A24B" strokeWidth="1.6" strokeLinecap="round" vectorEffect="non-scaling-stroke">
-      <path d="M120 11C98 11 76 12 70 21C66 28 75 33 79 27C82 22 75 19 72 23" vectorEffect="non-scaling-stroke" />
-      <path d="M120 89C98 89 76 88 70 79C66 72 75 67 79 73C82 78 75 81 72 77" vectorEffect="non-scaling-stroke" />
-      <path d="M52 20C58 26 58 32 54 36" vectorEffect="non-scaling-stroke" />
-      <path d="M52 80C58 74 58 68 54 64" vectorEffect="non-scaling-stroke" />
+  <svg className={`sb-cap${flip ? ' flip' : ''}`} viewBox="0 0 150 100" preserveAspectRatio="xMaxYMid meet" aria-hidden="true">
+    <path className="sb-fill" d="M150 5H50C30 5 15 15 15 33V39C15 44 8 47 3 50C8 53 15 56 15 61V67C15 85 30 95 50 95H150Z" />
+    <path d="M150 5H50C30 5 15 15 15 33V39C15 44 8 47 3 50C8 53 15 56 15 61V67C15 85 30 95 50 95H150" fill="none" stroke="#C9A24B" strokeWidth="2.4" vectorEffect="non-scaling-stroke" />
+    <path d="M150 12H52C36 12 23 20 23 34V40C23 45 19 48 15 50C19 52 23 55 23 60V66C23 80 36 88 52 88H150" fill="none" stroke="#2B2778" strokeWidth="1.1" opacity=".7" vectorEffect="non-scaling-stroke" />
+
+    {/* top corner scrolls: a long volute running in from the rail, and a second one curling the other way */}
+    <g fill="none" stroke="#C9A24B" strokeWidth="2" strokeLinecap="round" vectorEffect="non-scaling-stroke">
+      <path d="M150 12C128 12 106 12 92 16C78 20 74 33 84 38C94 43 104 33 98 26C94 21 86 25 88 30" vectorEffect="non-scaling-stroke" />
+      <path d="M66 12C54 12 44 17 41 26C38 36 48 43 56 37C62 32 57 25 51 28" vectorEffect="non-scaling-stroke" />
+      <path d="M30 23C31 30 36 35 43 37" strokeWidth="1.6" vectorEffect="non-scaling-stroke" />
     </g>
+    {/* bottom corner (mirrored) */}
+    <g fill="none" stroke="#C9A24B" strokeWidth="2" strokeLinecap="round" vectorEffect="non-scaling-stroke">
+      <path d="M150 88C128 88 106 88 92 84C78 80 74 67 84 62C94 57 104 67 98 74C94 79 86 75 88 70" vectorEffect="non-scaling-stroke" />
+      <path d="M66 88C54 88 44 83 41 74C38 64 48 57 56 63C62 68 57 75 51 72" vectorEffect="non-scaling-stroke" />
+      <path d="M30 77C31 70 36 65 43 63" strokeWidth="1.6" vectorEffect="non-scaling-stroke" />
+    </g>
+
     <g fill="#C9A24B">
-      <path d="M26 50l9-11 9 11-9 11z" />
-      <circle cx="4" cy="50" r="2.8" />
-      <circle cx="50" cy="38" r="1.7" /><circle cx="50" cy="62" r="1.7" />
-      <circle cx="84" cy="21" r="1.5" /><circle cx="84" cy="79" r="1.5" />
+      {/* leaves sprouting from the volutes */}
+      <path d="M122 13C126 20 122 26 114 26C114 19 117 15 122 13Z" />
+      <path d="M122 87C126 80 122 74 114 74C114 81 117 85 122 87Z" />
+      <path d="M72 13C76 19 72 24 66 24C66 18 68 15 72 13Z" />
+      <path d="M72 87C76 81 72 76 66 76C66 82 68 85 72 87Z" />
+      {/* tip finial: diamond */}
+      <path d="M27 50l9-10 9 10-9 10z" />
+      <circle cx="3" cy="50" r="2.8" />
+      {/* beads */}
+      <circle cx="53" cy="50" r="1.8" /><circle cx="60" cy="50" r="1.2" />
+      <circle cx="33" cy="22" r="1.7" /><circle cx="33" cy="78" r="1.7" />
+      <circle cx="108" cy="30" r="1.6" /><circle cx="108" cy="70" r="1.6" />
     </g>
   </svg>
 );
