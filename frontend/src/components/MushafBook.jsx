@@ -266,34 +266,42 @@ export default function MushafBook({ pages, reciterId, showTools, nav }) {
             <p className="study-hint">{L('اضغط على أي آية لتشغيلها وتكرارها وقراءة تفسيرها', 'Tap any ayah to play it, repeat it and read its tafsir')}</p>
           ) : (
             <>
-              <div className="study-actions-title">
-                {current.surah.name} · {L('آية', 'Ayah')} {lang === 'ar' ? toArabicNum(current.numberInSurah) : current.numberInSurah}
+              <div className="study-actions-head">
+                <span className="sa-badge">{lang === 'ar' ? toArabicNum(current.numberInSurah) : current.numberInSurah}</span>
+                <div>
+                  <div className="study-actions-title">{current.surah.name}</div>
+                  <div className="sa-sub">{L('آية', 'Ayah')} {lang === 'ar' ? toArabicNum(current.numberInSurah) : current.numberInSurah}</div>
+                </div>
               </div>
 
               <div className="study-actions-row">
-                <label className="study-label">
-                  {L('إلى آية', 'To ayah')}
-                  <select className="study-select" value={rangeEnd ?? selected} onChange={e => setRangeEnd(+e.target.value)}>
-                    {rangeChoices.map(({ a, i }) => (
-                      <option key={a.number} value={i}>{lang === 'ar' ? toArabicNum(a.numberInSurah) : a.numberInSurah}</option>
-                    ))}
-                  </select>
-                </label>
+                <div className="study-selects">
+                  <label className="study-label">
+                    {L('إلى آية', 'To ayah')}
+                    <select className="study-select" value={rangeEnd ?? selected} onChange={e => setRangeEnd(+e.target.value)}>
+                      {rangeChoices.map(({ a, i }) => (
+                        <option key={a.number} value={i}>{lang === 'ar' ? toArabicNum(a.numberInSurah) : a.numberInSurah}</option>
+                      ))}
+                    </select>
+                  </label>
 
-                <label className="study-label">
-                  {L('التكرار', 'Repeat')}
-                  <select className="study-select" value={repeat} onChange={e => setRepeat(+e.target.value)}>
-                    {REPEAT_OPTIONS.map(n => (
-                      <option key={n} value={n}>{n === 0 ? '∞' : `${n}×`}</option>
-                    ))}
-                  </select>
-                </label>
+                  <label className="study-label">
+                    {L('التكرار', 'Repeat')}
+                    <select className="study-select" value={repeat} onChange={e => setRepeat(+e.target.value)}>
+                      {REPEAT_OPTIONS.map(n => (
+                        <option key={n} value={n}>{n === 0 ? '∞' : `${n}×`}</option>
+                      ))}
+                    </select>
+                  </label>
+                </div>
 
-                {playingIdx === null
-                  ? <button className="btn btn-primary btn-sm" onClick={play}>▶ {L('تشغيل', 'Play')}</button>
-                  : <button className="btn btn-outline btn-sm" onClick={stop}>■ {L('إيقاف', 'Stop')}</button>}
-                <button className="btn btn-outline btn-sm" onClick={handleBookmark}>🔖 {L('إشارة', 'Bookmark')}</button>
-                <button className="btn btn-outline btn-sm" onClick={handleMemorized}>✓ {L('حفظت إلى هنا', 'Memorized to here')}</button>
+                <div className="study-buttons">
+                  {playingIdx === null
+                    ? <button className="btn btn-primary btn-sm sa-play" onClick={play}>▶ {L('تشغيل', 'Play')}</button>
+                    : <button className="btn btn-outline btn-sm sa-play" onClick={stop}>■ {L('إيقاف', 'Stop')}</button>}
+                  <button className="btn btn-outline btn-sm" onClick={handleBookmark}>🔖 {L('إشارة', 'Bookmark')}</button>
+                  <button className="btn btn-outline btn-sm sa-done" onClick={handleMemorized}>✓ {L('حفظت إلى هنا', 'Memorized to here')}</button>
+                </div>
               </div>
 
               {edition && (

@@ -122,3 +122,33 @@
 }
 
 @media (prefers-reduced-motion: reduce) { .mb-wrap .mb-arrow { transition: none; } }
+
+/* ── Selected-ayah card ── */
+.mb-wrap .study-actions {
+  max-width: 860px; padding: 20px 22px; border-radius: 22px; box-shadow: var(--shadow-lg);
+  background: var(--bg-card); border: 1px solid var(--border); position: relative; overflow: hidden;
+}
+.mb-wrap .study-actions::before { content: ''; position: absolute; inset-block: 0; inset-inline-start: 0; width: 4px; background: linear-gradient(var(--gold-lt), var(--gold)); }
+.study-actions-head { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; }
+.sa-badge {
+  flex-shrink: 0; width: 46px; height: 46px; display: grid; place-items: center; border-radius: 14px;
+  font-weight: 700; font-size: 1.05rem; color: #fff; background: linear-gradient(135deg, var(--indigo), var(--green)); box-shadow: 0 6px 14px rgba(47, 43, 124, .28);
+}
+[data-theme="dark"] .sa-badge { color: #14142B; background: linear-gradient(135deg, var(--green), var(--green-lt)); box-shadow: none; }
+.mb-wrap .study-actions-title { margin: 0; font-size: 1.1rem; font-weight: 700; }
+.sa-sub { font-size: .78rem; color: var(--text2); margin-top: 2px; }
+.mb-wrap .study-actions-row { align-items: flex-end; justify-content: space-between; gap: 14px; }
+.study-selects { display: flex; gap: 12px; flex-wrap: wrap; }
+.study-buttons { display: flex; gap: 8px; flex-wrap: wrap; }
+.mb-wrap .study-label { font-size: .74rem; font-weight: 600; gap: 5px; }
+.mb-wrap .study-actions .btn-sm { height: 42px; padding: 0 18px; border-radius: 999px; font-weight: 600; display: inline-flex; align-items: center; gap: 6px; }
+.mb-wrap .study-actions .btn-primary { background: linear-gradient(135deg, var(--indigo), var(--green)); box-shadow: 0 6px 14px rgba(47, 43, 124, .28); }
+[data-theme="dark"] .mb-wrap .study-actions .btn-primary { background: linear-gradient(135deg, var(--green), var(--green-lt)); color: #14142B; box-shadow: none; }
+.mb-wrap .study-actions .sa-done { color: #1B7A52; border-color: rgba(27, 122, 82, .4); }
+.mb-wrap .study-actions .sa-done:hover { background: rgba(27, 122, 82, .1); border-color: #1B7A52; color: #1B7A52; }
+.mb-wrap .study-note {
+  margin-top: 18px; padding: 14px 18px; border: none; border-radius: 14px; font-size: 1rem; line-height: 2; color: var(--text);
+  background: var(--bg-raised); border-inline-start: 3px solid var(--gold);
+}
+.mb-wrap .study-hint { padding: 6px 0; }
+@media (max-width: 640px) { .mb-wrap .study-actions-row { flex-direction: column; align-items: stretch; } .study-buttons .btn-sm { flex: 1; justify-content: center; } }

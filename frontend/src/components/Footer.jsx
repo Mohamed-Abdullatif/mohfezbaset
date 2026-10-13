@@ -1,6 +1,7 @@
 import React from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
+import './footer.css';
 
 const LINKS_AR = [
   { to: '/',          label: 'الرئيسية' },
@@ -32,7 +33,6 @@ export default function Footer() {
 
         {/* Brand */}
         <div className="footer-brand">
-          
           <img className="brand-mark brand-mark-sm" src={`${import.meta.env.BASE_URL}logo-mark.webp`} alt="" width="30" height="28" />
           <span className="footer-app-name">{t.appName}</span>
         </div>
@@ -57,7 +57,7 @@ export default function Footer() {
           <span className="footer-dot">·</span>
           <span>{lang === 'ar' ? 'حفظ القرآن الكريم بطريقة ميسرة' : 'Quran memorization made simple'}</span>
           <span className="footer-dot">·</span>
-          <span>{lang === 'ar' ? 'بواسطة' : 'By'} <strong style={{ color: 'var(--green)', fontWeight: 700 }}>{lang === 'ar' ? 'محمد عبد اللطيف' : 'Mohamed Abdullatif'}</strong></span>
+          <span>{lang === 'ar' ? 'بواسطة' : 'By'} <strong className="footer-author">{lang === 'ar' ? 'محمد عبد اللطيف' : 'Mohamed Abdullatif'}</strong></span>
         </div>
 
       </div>
